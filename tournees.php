@@ -43,7 +43,7 @@
         <input type="text" id="villeP" name="villeP" placeholder="Ville" required>
         <input type="hidden" name="tournee_id" value="<?php echo $_POST['tournees'] ?>">
         <input type="text" id="infos" name="infos" placeholder="infos">
-        <input type="text" id="paquets" name="paquets" placeholder="nb de paquets" required>
+        <input type="text" id="exemplaires" name="exemplaires" placeholder="nb de exemplaires" required>
         <input type="text" id="categorie" name="categorie" placeholder="catégorie" required>
         <input type="submit" name="ajouter" value="Ajouter">
     </form>
@@ -73,7 +73,7 @@
         .$x->adresse.' '
         .$x->code_postal.' '
         .$x->ville.' | '
-        .$x->paquets.' paquets. <i>'
+        .$x->exemplaires.' exemplaires. <i>'
         .$x->infos
         .'</i><form action="update.php" method="POST">
         <input type="hidden" name="id" value="'.$x->id.'">
