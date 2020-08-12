@@ -1,3 +1,11 @@
+<head>
+    <title>pdf</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="refresh" content="3;URL=index.php" />
+</head>
+
 <?php
 require('fpdf/fpdf.php');
 include_once 'Database.php'; 
@@ -7,14 +15,19 @@ if($_SESSION['user']->accreditation < 1 && $_SESSION['user']->accreditation > 2)
     header("Location:index.php");
 };
 
+//On recupere les données de la tournée affectée à cet utlisateur
 $tournee = $_SESSION['user']->tournees;
-
 $database = new Database();
 $connexion = $database->getConnection();    
 $stmt = $connexion->prepare("SELECT * FROM points WHERE tournees=:tournees AND exemplaires > 0");
 $stmt->bindParam(':tournees', $tournee);
 $stmt->execute();
 $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+$stmt2 = $connexion->prepare("SELECT * FROM tournees WHERE id=:tournees");
+$stmt2->bindParam(':tournees', $tournee);
+$stmt2->execute();
+$result2 = $stmt2->fetch(PDO::FETCH_OBJ);
 
 $pdf = new FPDF();
 $pdf->AddPage();
@@ -39,6 +52,7 @@ foreach( $result as $row ) {
     $pdf->Ln();
     $pdf->Ln();
 }
+$pdf->Output('F', 'rapports/tournée '.$result2->nom.', '.$_SESSION['user']->prenom.' '.$_SESSION['user']->nom.' '.date('d-m-Y').'.pdf', true);
 
-$pdf->Output('F', $tournee.', '.$_SESSION['user']->prenom.', '.$_SESSION['user']->nom.' '.date('d-m-Y'));
+echo "Le rapport a été envoyé, merci";
 ?>

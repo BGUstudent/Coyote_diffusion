@@ -8,14 +8,31 @@
     <title>Ajout tournées</title>
 </head>
 <body>
+    <!-- header -->
+    <?php include 'header_admin.php';?>
+    <br>
+    <?php
+    $database = new Database();
+    $connexion = $database->getConnection();
+    $stmt = $connexion->prepare("SELECT * FROM clients");
+    $stmt->execute(); 
+    $clients = $stmt->fetchAll(PDO::FETCH_OBJ);   
+    ?>
+
     <!-- formulaire d'ajout -->
     <form method="post" action="add_tournee.php">
         Ajouter une tournée <br>
         <input type="text" id="nom" name="nom" placeholder="Nom de la tournée" required>
-        <input type="text" id="client" name="client" placeholder="Nom du client" required>
+        <select name="client" id="client-select">
+            <?php
+            foreach($clients as $client){
+                echo '<option value="'.$client->nom_client.'">'.$client->nom_client.'</option>';
+            }
+            ?>
+        </select>
         <select name="equipe" id="equipe-select">
-            <option value="Solo">Solo</option>';
-            <option value="Binôme">Binôme</option>';
+            <option value="Solo">Solo</option>
+            <option value="Binôme">Binôme</option>'
         </select>
         <input type="submit" name="submit" value="Ajouter">
     </form>

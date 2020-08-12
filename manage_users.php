@@ -8,6 +8,10 @@
     <title>utilisateurs</title>
 </head>
 <body>
+    <!-- header -->
+    <?php include 'header_admin.php';?>
+    <br>
+
     <h4>Liste des utilisateurs enregistrés</h4><br>
     <?php
     $database = new Database();
@@ -35,6 +39,7 @@
             <option value="1">User</option>
             <option value="2">Admin</option>
         </select>
+        Permis?
         <select id="permis" name="permis">
             <option value="Oui">Oui</option>
             <option value="Non">Non</option>

@@ -8,6 +8,10 @@
     <title>gérer les tournées</title>
 </head>
 <body>
+    <!-- header -->
+    <?php include 'header_admin.php';?>
+    <br>
+
     <!-- Selection de la tournée -->
     <form method="post" action="tournees.php">
         Selectionner une tournée :
@@ -78,6 +82,7 @@
         .'</i><form action="update.php" method="POST">
         <input type="hidden" name="id" value="'.$x->id.'">
         <input type="submit" name="submitU'.$x->id.'" value="Modifier"></form>
+        
         <form action="delete.php" method="POST">
         <input type="hidden" name="id" value="'.$x->id.'">
         <input type="submit" name="submitD'.$x->id.'" value="Supprimer"></form>';

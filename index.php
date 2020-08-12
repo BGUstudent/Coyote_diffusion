@@ -4,28 +4,33 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <title>login</title>
 </head>
 <body>
+	<img src="img/COYOTE_LOGO_final.png" style="max-width: 400px;" class="img-fluid rounded mx-auto d-block" alt="logo_coyote">
     <!-- Login Form -->
-	<div class="form">
+	<div class="form mx-auto mt-5" style="width: 350px;">
 		<form method="post" action="index.php">
 			<fieldset>
-				<legend style="font-weight:bold">login</legend>
+				<legend style="font-weight:bold">Login</legend>
 				<!-- Username -->
-				<div>
-					<label for="email">adresse mail</label>
-					<input placeholder="entrez votre adresse mail"type="text" name="email" id="email" required>
+				<div class="form-group">
+					<label for="email">Adresse mail ou numéro</label>
+					<input class="form-control" placeholder="Entrez votre adresse mail ou votre numéro"type="text" name="email" id="email" required>
 				</div>
 				<!-- Password -->
-				<div>
-					<label for="password">mot de passe</label>
-					<input placeholder="Saisir votre mot de passe"type="password" name="pass" id="pass" required>
+				<div class="form-group">
+					<label for="password">Mot de passe</label>
+					<input class="form-control" placeholder="Saisir votre mot de passe"type="password" name="pass" id="pass" required>
 				</div>
 				<!-- Submit -->
 				<div>
-					<input type="submit" value="valider"name="submit">
+					<input type="submit" class="btn btn-primary" value="valider" name="submit">
 				</div>
 			</fieldset>
 		</form>
@@ -44,7 +49,7 @@
 		$database = new Database();
 		$connexion = $database->getConnection();
 		// Requete qui selectionne les utilisateurs correspondant aux inputs
-		$stmt = $connexion->prepare("SELECT * FROM user WHERE email=:email && password=:pass");
+		$stmt = $connexion->prepare("SELECT * FROM user WHERE email=:email && password=:pass OR numero=:email && password=:pass");
 		$stmt->bindParam(':email', $email);
 		$stmt->bindParam(':pass', $pass);
 		$stmt->execute();

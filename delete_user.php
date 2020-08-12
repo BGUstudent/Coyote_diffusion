@@ -1,7 +1,7 @@
 <?php include_once 'Database.php'; ?>
 
 <head>
-	<meta http-equiv="refresh" content="5;URL=manage_users.php"/>
+	<meta http-equiv="refresh" content="3;URL=manage_users.php"/>
 </head>
 
 <body>
