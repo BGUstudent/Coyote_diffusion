@@ -43,7 +43,7 @@
             echo '</select>
 
             <select name="tournees'.$row->id.'" id="tournees-select'.$row->id.'">
-                <option value="">tournée</option>
+                <option value="">puis une tournée</option>
             </select>
 
             <input type="submit" value="valider" name="submit'.$row->id.'"></input>
@@ -83,6 +83,8 @@
             return response.json();
         })
         .then(function(data){
+            document.getElementById("tournees-select"+id).innerHTML
+            +=`<option value="">- Selectionnez -</option>`
             data.forEach(function(item){
                 document.getElementById("tournees-select"+id).innerHTML
                 +=`<option value="${JSON.stringify(item.id).replace(/\"/g, "")}">${JSON.stringify(item.nom).replace(/\"/g, "")}</option>`

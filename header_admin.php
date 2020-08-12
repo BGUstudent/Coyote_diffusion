@@ -49,6 +49,9 @@
                     </div>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="monitoring.php">Monitoring</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="read_reporting.php">Consulter les rapports de distribution</a>
                 </li>
             </ul>

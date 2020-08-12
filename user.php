@@ -40,7 +40,7 @@
     $result = $stmt->fetchAll(PDO::FETCH_OBJ);
     echo '<ul class="list-group">'; //Start list
     foreach( $result as $row ) {
-        echo "<li class='list-group-item' id='li".$row->id."' ".(($row->last_update==date('Y-m-d'))?'style="background-color: #abfaba;"':"")//green if done
+        echo "<li class='list-group-item' id='li".$row->id."' ".(($row->last_update)?'style="background-color: #abfaba;"':"")//green if done
         ."><button class='btn btn-light btn-sm float-right' onclick='copy(".$row->id.")'>Copier l'adresse</button><span id='point".$row->id."'><b>"
         . $row->nom . "</b> <br>" 
         . $row->adresse . " " 
@@ -91,14 +91,6 @@
     }
     echo '</ul">';
     ?>
-    <br>
-
-<!-- créer le PDF de reporting -->
-    <div class="pdf">
-        <form method="post" action="pdf.php">
-            <input type="submit" name="pdf" value="Valider la tournée" action="pdf.php" id="pdf">
-        </form>
-    </div>
     <br>
 
 <!-- logout -->
