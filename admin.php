@@ -14,7 +14,9 @@
     <?php include 'header_admin.php';?>
     <br>
 
+<div class="container">
     <h2>Assigner une tournée</h2>
+
     <?php
     $database = new Database();
     $connexion = $database->getConnection();
@@ -64,12 +66,7 @@
         }
     }
     ?>
-    
-    <div class="logout">
-        <form method="post" action="logout.php">
-            <input type="submit" name="logout" value="Se déconnecter" action="logout.php" id="logout">
-        </form>
-    </div>
+</div>
 
 <script>
     function changeTournees(that, id){

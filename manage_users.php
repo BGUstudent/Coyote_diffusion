@@ -11,6 +11,7 @@
     <!-- header -->
     <?php include 'header_admin.php';?>
     <br>
+    <div class="container">
 
     <h4>Liste des utilisateurs enregistrés</h4><br>
     <?php
@@ -23,30 +24,35 @@
     foreach($users as $user){
         $user->accreditation == 2 ? $accred='Admin' : $accred='User'; 
         echo $user->prenom.' '.$user->nom. ", permis : " . $user->permis.', '.$accred.', '.$user->email. ', tournée actuelle : '.$user->tt.
-        '<form action="delete_user.php" method="POST">
+        '<form class="form" action="delete_user.php" method="POST">
         <input type="hidden" name="id" value="'.$user->id.'">
-        <input type="submit" name="submitD'.$user->id.'" value="Supprimer"></form><br>';
+        <input class="btn btn-danger btn-sm" type="submit" name="submitD'.$user->id.'" value="Supprimer"></form><br>';
     }
 ?>
+
 <!-- formulaire d'ajout -->
-<br>Ajouter un utilisateur<br>
-    <form method="post" action="add_user.php">
-        <input type="text" id="prenom" name="prenom" placeholder="Prénom">
-        <input type="text" id="nom" name="nom" placeholder="Nom">
-        <input type="email" id="email" name="email" placeholder="Email">
-        <input type="password" id="pass" name="pass" placeholder="Mot de passe">
-        <select id="accred" name="accred">
-            <option value="1">User</option>
-            <option value="2">Admin</option>
-        </select>
-        Permis?
-        <select id="permis" name="permis">
-            <option value="Oui">Oui</option>
-            <option value="Non">Non</option>
-            <option value="Etranger">Etranger</option>
-        </select>
-        <input type="submit" name="add_user" value="Ajouter">
+<br><h5>Ajouter un utilisateur</h5>
+    <form class="form" style="width: 400px;" method="post" action="add_user.php">
+        <input class="form-control" type="text" id="prenom" name="prenom" placeholder="Prénom" required>
+        <input class="form-control" type="text" id="nom" name="nom" placeholder="Nom" required>
+        <input class="form-control" type="text" id="tel" name="tel" placeholder="numéro de téléphone">
+        <div class="text-right">
+            <label for="accred">Niveau d'accreditation</label>
+            <select class="custom-select custom-select-sm w-25" id="accred" name="accred">
+                <option value="1">User</option>
+                <option value="2">Admin</option>
+            </select>
+        </div>
+        <div class="text-right">
+            <label for="accred">Permis de conduire</label>
+            <select class="custom-select custom-select-sm w-25" id="permis" name="permis">
+                <option value="Oui">Oui</option>
+                <option value="Non">Non</option>
+                <option value="Etranger">Etranger</option>
+            </select>
+        </div>
+        <input type="submit" class="float-right btn btn-primary" name="add_user" value="Ajouter">
     </form>
-    <a href="admin.php">Retour</a>
+</div>
 </body>
 </html>

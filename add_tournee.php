@@ -11,6 +11,8 @@
     <!-- header -->
     <?php include 'header_admin.php';?>
     <br>
+    <div class="container">
+
     <?php
     $database = new Database();
     $connexion = $database->getConnection();
@@ -20,21 +22,21 @@
     ?>
 
     <!-- formulaire d'ajout -->
-    <form method="post" action="add_tournee.php">
-        Ajouter une tournée <br>
-        <input type="text" id="nom" name="nom" placeholder="Nom de la tournée" required>
-        <select name="client" id="client-select">
+    <h4>Ajouter une tournée</h4>
+    <form class="form-inline" method="post" action="add_tournee.php">
+        <input type="text" class="form-control mr-sm-1" id="nom" name="nom" placeholder="Nom de la tournée" required>
+        <select class="custom-select custom-select mr-1" name="client" id="client-select">
             <?php
             foreach($clients as $client){
                 echo '<option value="'.$client->nom_client.'">'.$client->nom_client.'</option>';
             }
             ?>
         </select>
-        <select name="equipe" id="equipe-select">
+        <select class="custom-select custom-select mr-1" name="equipe" id="equipe-select">
             <option value="Solo">Solo</option>
             <option value="Binôme">Binôme</option>'
         </select>
-        <input type="submit" name="submit" value="Ajouter">
+        <input type="submit" class="btn btn-primary" name="submit" value="Ajouter">
     </form>
     <?php
     if(isset($_POST['submit'])){ 
@@ -48,6 +50,6 @@
         echo "La tournée " .$_POST['nom']. " a été ajoutée";
     }
     ?>
-    <a href="admin.php">Retour</a>
+    </div>
 </body>
 </html>

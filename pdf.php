@@ -63,7 +63,7 @@ foreach( $result as $row ) {
     $pdf->Ln();
     $pdf->Ln();
 }
-$pdf->Output('F', 'rapports/tournée '.$result2->nom.', '.$user_info->prenom.' '.$user_info->nom.' '.date('d-m-Y').'.pdf', true);
+$pdf->Output('F', 'rapports/tournée '.$result2->client.', '.$result2->nom.', '.$user_info->prenom.' '.$user_info->nom.' '.date('d-m-Y').'.pdf', true);
 
 echo "Le rapport PDF a été envoyé";
 
@@ -121,10 +121,10 @@ echo date('H:i:s') , " Write to Excel2007 format" , EOL;
 $callStartTime = microtime(true);
 
 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-$objWriter->save('rapports/tournée '.$result2->nom.', '.$user_info->prenom.' '.$user_info->nom.' '.date('d-m-Y').'.xlsx');
+$objWriter->save('rapports/tournée '.$result2->client.', '.$result2->nom.', '.$user_info->prenom.' '.$user_info->nom.' '.date('d-m-Y').'.xlsx');
 $callEndTime = microtime(true);
 $callTime = $callEndTime - $callStartTime;
 
-echo date('H:i:s') , ' File written to rapports/tournée'.$result2->nom.', '.$user_info->prenom.' '.$user_info->nom.' '.date('d-m-Y').'.xlsx';
+echo date('H:i:s') , ' File written to rapports/tournée'.$result2->client.', '.$result2->nom.', '.$user_info->prenom.' '.$user_info->nom.' '.date('d-m-Y').'.xlsx';
 
 ?>

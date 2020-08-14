@@ -28,8 +28,14 @@
     <title>user sheet</title>
 </head>
 <body>
+<div class="container">
+
     <?php
-    echo "<h2>Bienvenue "; echo $_SESSION['user']->prenom; echo "</h2><br>Voici les points à livrer :<br><br>";
+    echo "<h2>Bienvenue "; echo $_SESSION['user']->prenom;
+    if($_SESSION['user']->accreditation == 1){
+        echo '<br><a href="logout.php" class="h-100 btn btn-info"><i class="fas fa-sign-out-alt"></i> Se déconnecter</a>';
+    }
+    echo "</h2><br>Voici les points à livrer :<br><br>";
     $tournee = $_SESSION['user']->tournees;
     //On affiche les points de distributions attribués
     $database = new Database();
@@ -91,20 +97,7 @@
     }
     echo '</ul">';
     ?>
-    <br>
-
-<!-- logout -->
-    <div class="logout">
-        <form method="post" action="logout.php">
-            <input type="submit" name="logout" value="Se déconnecter" action="logout.php" id="logout">
-        </form>
-    </div>
-
-    <?php
-	if($_SESSION['user']->accreditation == 2){
-       echo '<br><a href="admin.php">Retourner au menu Admin</a>';
-	}
-    ?>
+</div>
 
 <!-- Script pour toggle/hide les infos supp -->
     <script>

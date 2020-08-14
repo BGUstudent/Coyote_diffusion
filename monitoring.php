@@ -10,11 +10,12 @@
 </head>
 <body>
 
-    <!-- header -->
-    <?php include 'header_admin.php';?>
-    <br>
-    
-    <h2>Choisir une tournée :</h2>
+<!-- header -->
+<?php include 'header_admin.php';?>
+<br>
+<div class="container">
+
+    <h3>Choisir une tournée </h3>
     <?php
     $database = new Database();
     $connexion = $database->getConnection();
@@ -30,8 +31,8 @@
     $stmtC->execute();
     $clients = $stmtC->fetchAll(PDO::FETCH_OBJ);
     ?>
-    <form id="form" method="post" action="admin.php">
-        <select name="clients" id="clients-select" onchange="changeTournees(this.value)">
+    <form class="form-inline" id="form" method="post" action="admin.php">
+        <select class="custom-select custom-select mr-1" name="clients" id="clients-select" onchange="changeTournees(this.value)">
             <option value="">Selectionnez un client</option>
             <?php
             foreach($clients as $client){ //Choix du client
@@ -39,40 +40,35 @@
             }
             ?>
         </select>
-        <select name="tournees" id="tournees-select" onchange="changeMonitoring(this.value)">
+        <select class="custom-select custom-select mr-1" name="tournees" id="tournees-select" onchange="changeMonitoring(this.value)">
             <option value="">puis une tournée</option>
         </select>
     </form><br>
 
     <div id='doneBy'></div>
-    <div class='' id='monitoring' style="max-width: 600px;">Veuillez selectionner une tournée à surveiller</div>
+    <div class='' id='monitoring' style="max-width: 600px;"><b>Veuillez selectionner une tournée à surveiller</b></div>
+        <br>
+    <div id="buttonsToHide" style='display:none'>
+        <!-- créer le PDF de reporting -->
+        <div class="pdf">
+            <form method="post" action="pdf.php">
+                <input type="hidden" name="users" id="users" value="">
+                <input type="hidden" name="tournee" id="tournee" value="">
+                <input type="submit" class="btn btn-success" name="pdf" value="Valider la tournée" action="pdf.php" id="pdf">
+            </form>
+        </div>
+        <br>
 
-    <!-- créer le PDF de reporting -->
-    <div class="pdf">
-        <form method="post" action="pdf.php">
-            <input type="hidden" name="users" id="users" value="">
-            <input type="hidden" name="tournee" id="tournee" value="">
-            <input type="submit" name="pdf" value="Valider la tournée" action="pdf.php" id="pdf">
-        </form>
+        <!-- Reset -->
+        <div>
+            <form method="post" action="reset.php">
+                <input type="hidden" name="user_info" id="user_info" value="">
+                <input type="hidden" name="tournee_info" id="tournee_info" value="">
+                <input type="submit" class="btn btn-warning" name="pdf" value="Réinitialiser la tournée" action="reset.php" id="reset">
+            </form>
+        </div>
     </div>
-    <br>
-
-    <!-- Reset -->
-    <div>
-        <form method="post" action="reset.php">
-            <input type="hidden" name="user_info" id="user_info" value="">
-            <input type="hidden" name="tournee_info" id="tournee_info" value="">
-            <input type="submit" name="pdf" value="Réinitialiser la tournée" action="reset.php" id="reset">
-        </form>
-    </div>
-    <br>
-
-    <!-- logout -->
-    <div class="logout">
-        <form method="post" action="logout.php">
-            <input type="submit" name="logout" value="Se déconnecter" action="logout.php" id="logout">
-        </form>
-    </div>
+</div>
 
 <script>
     function changeTournees(that){
@@ -98,6 +94,7 @@
     }
 
     function changeMonitoring(that){
+        document.getElementById("buttonsToHide").style.display = "block"; 
         document.getElementById("tournee").value = that;//change 'tournee' value
         document.getElementById("tournee_info").value = that;//change 'tournee_info' value
         document.getElementById("doneBy").innerHTML=''

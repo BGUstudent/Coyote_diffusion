@@ -9,6 +9,7 @@
     <!-- header -->
     <?php include 'header_admin.php';?>
     <br>
+    <div class="container">
 
     <?php
     $dir = 'rapports/';
@@ -19,8 +20,6 @@
     }    
     echo'</ul>';
     ?>
-
-    <br>
-    <a href="admin.php">Retour</a>
+  </div>
 </body>
 </html>

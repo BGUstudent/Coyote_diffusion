@@ -12,16 +12,16 @@
     <title>login</title>
 </head>
 <body>
-	<img src="img/COYOTE_LOGO_final.png" style="max-width: 400px;" class="img-fluid rounded mx-auto d-block" alt="logo_coyote">
+	<img src="img/COYOTE_LOGO_final.png" style="max-width: 310px;" class="img-fluid rounded mx-auto d-block" alt="logo_coyote">
     <!-- Login Form -->
-	<div class="form mx-auto mt-5" style="width: 350px;">
+	<div class="form mx-auto mt-5" style="width: 310px;">
 		<form method="post" action="index.php">
 			<fieldset>
 				<legend style="font-weight:bold">Login</legend>
 				<!-- Username -->
 				<div class="form-group">
 					<label for="email">Adresse mail ou numéro</label>
-					<input class="form-control" placeholder="Entrez votre adresse mail ou votre numéro"type="text" name="email" id="email" required>
+					<input class="form-control" placeholder="Entrez votre email ou votre numéro"type="text" name="email" id="email" required>
 				</div>
 				<!-- Password -->
 				<div class="form-group">
