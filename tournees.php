@@ -32,13 +32,13 @@
         <input class="btn btn-primary" type="submit" value="valider" name="submitT"></input>
     </form>
     <br>
-        <?php
-        if(isset($_POST['submitT'])){ 
-            $stmtA = $connexion->prepare("SELECT nom FROM tournees WHERE id=?");
-            $stmtA->bindValue(1, $_POST['tournees'], PDO::PARAM_STR);
-            $stmtA->execute(); 
-            $nom_tournee = $stmtA->fetch(PDO::FETCH_OBJ);   
-        ?>
+    <?php
+    if(isset($_POST['submitT'])){ 
+        $stmtA = $connexion->prepare("SELECT nom FROM tournees WHERE id=?");
+        $stmtA->bindValue(1, $_POST['tournees'], PDO::PARAM_STR);
+        $stmtA->execute(); 
+        $nom_tournee = $stmtA->fetch(PDO::FETCH_OBJ);   
+    ?>
 <button class='btn btn-link' onclick='expand()'>Ajouter un point de livraison à la tournée <?php echo $nom_tournee->nom ?></button>
 <div id="hide" style='display:none'>
 <!-- formulaire d'ajout -->
@@ -68,14 +68,25 @@
 <br>
 
 <!-- Afficher les points d'une tournée -->
-    <div id=points>
+    <br><div id=points>
     <?php
     $stmtP = $connexion->prepare("SELECT * FROM points WHERE tournees = ? ");
     $stmtP->bindValue(1, $_POST['tournees'], PDO::PARAM_STR);
     $stmtP->execute();
     $points = $stmtP->fetchAll(PDO::FETCH_OBJ);
     foreach($points as $x){
-        echo '<div class="form-inline mb-3" method="post" action="">
+        if($x->motif && $x->motif !== "livré"){
+            echo'<div style="max-width:1404px;" class="bg-danger">Lors de la dernière tournée : <b>'.$x->motif.'</b></div>';
+        }elseif($x->motif && $x->exemplaires > $x->distribués){
+            echo'<div style="max-width:1404px;" class="bg-warning">Lors de la dernière tournée : <b>'.$x->motif.'</b>, '.$x->distribués.' exemplaires distribués</div>';
+        }
+        if($x->exemplaires < $x->distribués){
+            echo'<div style="max-width:1404px;" class="bg-success">Lors de la dernière tournée : <b>'.$x->motif.'</b>, '.$x->distribués.' exemplaires distribués</div>';
+        }
+        if($x->commentaires){
+            echo'<div style="max-width:1404px;" class="bg-info">Commentaire du livreur :'.$x->commentaires.'</div>';
+        }
+        echo '<div class="form-inline mb-4" method="post" action="">
         <input class="form-control mr-sm-1" type="text" id="nom'.$x->id.'" name="nom" value="'.$x->nom.'">
         <input class="form-control mr-sm-1" type="text" id="adresse'.$x->id.'" name="adresse" value="'.$x->adresse.'">
         <input class="form-control mr-sm-1" type="text" id="codePostal'.$x->id.'" name="codePostal" value="'.$x->code_postal.'">
@@ -91,8 +102,8 @@
 
         <div id="done'.$x->id.'"></div>
         </div>';
-        }
     }
+}
     ?>
     </div>
     <br>
