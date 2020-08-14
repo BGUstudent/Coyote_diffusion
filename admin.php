@@ -27,56 +27,73 @@
     $stmtC = $connexion->prepare("SELECT * FROM clients");
     $stmtC->execute();
     $clients = $stmtC->fetchAll(PDO::FETCH_OBJ);
-    ?>
-    <select name="clients" id="clients-select" onchange="changeTournees(this.value)">
-    <option value="">Selectionnez un client</option>';
-    <?php
-    foreach($clients as $client){ //Choix du client
-        echo'<option value="'.$client->nom_client.'">'.$client->nom_client.'</option>';
-    }
-    ?>
-    </select>
 
-    <div id="showUsers">
-        <form method="POST" action='admin.php'>
-            <select name="tournees" id="tournees-select" onchange="showUsers(this)">
-                <option value="" data-equipe="">puis une tournée</option>
-            </select>
-            <select name="user" id="user-select">
-                <option value="">Attribuer un livreur</option>
-                <?php
-                foreach($users as $user){
-                    echo'<option value="'.$user->id.'">'.$user->prenom.' '.$user->nom.' - Permis : '.$user->permis.'</option>';
-                }
-                ?>
-            </select>
-            <select name="user2" style='display:none' id="user2-select">
-                <option value="">Attribuer un 2ème livreur</option>
-                <?php
-                foreach($users as $user){
-                    echo'<option value="'.$user->id.'">'.$user->prenom.' '.$user->nom.' - Permis : '.$user->permis.'</option>';
-                }
-                ?>
-            </select>
-            <input type="submit" name="attribuer" value="Attribuer la tournée">
-        </form>
+    $stmtT = $connexion->prepare("SELECT u.id, u.prenom, u.nom, u.permis, t.client, t.nom as tt FROM user as u LEFT JOIN tournees AS t ON (u.tournees=t.id)");
+    $stmtT->execute();
+    $userJ = $stmtT->fetchAll(PDO::FETCH_OBJ);
+    ?>
+    <div class="form" style="max-width: 310px;">
+        <select class="custom-select custom-select mb-1" name="clients" id="clients-select" onchange="changeTournees(this.value)">
+            <option value="">Selectionnez un client</option>';
+            <?php
+            foreach($clients as $client){ //Choix du client
+                echo'<option value="'.$client->nom_client.'">'.$client->nom_client.'</option>';
+            }
+            ?>
+        </select>
+
+        <div id="showUsers">
+            <form method="POST" action=''>
+                <select class="custom-select custom-select mb-1" name="tournees" id="tournees-select" onchange="showUsers(this)">
+                    <option value="" data-equipe="">puis une tournée</option>
+                </select>
+                <select class="custom-select custom-select mb-1" name="user" id="user-select">
+                    <option value="">Attribuer un livreur</option>
+                    <?php
+                    foreach($users as $user){
+                        echo'<option value="'.$user->id.'">'.$user->prenom.' '.$user->nom.' - Permis : '.$user->permis.'</option>';
+                    }
+                    ?>
+                </select>
+                <select class="custom-select custom-select mb-1" name="user2" style='display:none' id="user2-select">
+                    <option value="">Attribuer un 2ème livreur</option>
+                    <?php
+                    foreach($users as $user){
+                        echo'<option value="'.$user->id.'">'.$user->prenom.' '.$user->nom.' - Permis : '.$user->permis.'</option>';
+                    }
+                    ?>
+                </select>
+                <input type="submit" class="btn btn-primary float-right" name="attribuer" value="Attribuer la tournée">
+            </form>
+        </div>
     </div>
+    <div>
+    <br><br><br><h4>Tournées déjà attribuées</h4>
+        <?php
+            foreach($userJ as $user){
+                if($user->tt){
+                    echo $user->client.' - '.$user->tt.' attribué à '.$user->prenom.' '.$user->nom.'<br>';
+                }
+            }
+        ?>
+    </div>    
 </div>
-    <?php
-    // fonction pour attribuer la tournée en BDD
-    if(isset($_POST['attribuer'])){ 
+<?php
+// fonction pour attribuer la tournée en BDD
+if(isset($_POST['attribuer'])){ 
+    $stmt = $connexion->prepare("UPDATE user SET tournees = ? WHERE id = ?");
+    $stmt->bindParam(1, $_POST['tournees']);
+    $stmt->bindParam(2, $_POST['user']);
+    $stmt->execute();
+    if($_POST['user2']){
         $stmt = $connexion->prepare("UPDATE user SET tournees = ? WHERE id = ?");
         $stmt->bindParam(1, $_POST['tournees']);
-        $stmt->bindParam(2, $_POST['user']);
+        $stmt->bindParam(2, $_POST['user2']);
         $stmt->execute();
-        if($_POST['user2']){
-            $stmt = $connexion->prepare("UPDATE user SET tournees = ? WHERE id = ?");
-            $stmt->bindParam(1, $_POST['tournees']);
-            $stmt->bindParam(2, $_POST['user2']);
-            $stmt->execute();
-        }
     }
-    ?>
+    echo("<script>location.href = 'admin.php';</script>");
+}
+?>
 <script>
     function changeTournees(that){
         document.getElementById("tournees-select").innerHTML=""
