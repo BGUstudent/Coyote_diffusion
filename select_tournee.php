@@ -20,7 +20,8 @@ $data = json_decode(file_get_contents("php://input"));
         foreach($tournees as $tournee){
             $arr_tour=array(
                 "id"=>$tournee->id,
-                "nom"=>$tournee->nom
+                "nom"=>$tournee->nom,
+                "equipe"=>$tournee->equipe
             );
             array_push($arr_tournees, $arr_tour);
         }

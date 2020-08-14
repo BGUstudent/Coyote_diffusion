@@ -16,7 +16,6 @@ if($_SESSION['user']->accreditation < 1 && $_SESSION['user']->accreditation > 2)
 
 //On recupere les données de la tournée affectée à cet utlisateur
 $tournee = $_POST['tournee_info'];
-$user = $_POST['user_info'];
 
 $database = new Database();
 $connexion = $database->getConnection();    
@@ -28,11 +27,20 @@ if($stmt->execute()){
     print_r($stmt->errorInfo());
 }
 
-$stmtU = $connexion->prepare("UPDATE user SET tournees=NULL WHERE id=?");
-$stmtU->bindParam(1, $user);
-if($stmtU->execute()){
+$user = $_POST['user_info'];
+$stmtR = $connexion->prepare("UPDATE user SET tournees=NULL WHERE id=?");
+$stmtR->bindParam(1, $user);
+if($stmtR->execute()){
     echo "<br>La tournée n'est plus assignée";
 }else{
     print_r($stmt->errorInfo());
 }
+
+if(isset($_POST['user2_info'])){
+    $user2 = $_POST['user2_info'];
+    $stmtR2 = $connexion->prepare("UPDATE user SET tournees=NULL WHERE id=?");
+    $stmtR2->bindParam(1, $user2);
+    $stmtR2->execute();
+}
+
 ?>

@@ -10,7 +10,7 @@ $connexion = $database->getConnection();
 $stmtU = $connexion->prepare("SELECT * FROM user WHERE tournees=:tournees");
 $stmtU->bindParam(':tournees', $data);
 $stmtU->execute();
-$users = $stmtU->fetch(PDO::FETCH_ASSOC);
+$users = $stmtU->fetchAll(PDO::FETCH_OBJ);
 
 $stmt = $connexion->prepare("SELECT * FROM points WHERE tournees=:tournees AND exemplaires > 0");
 $stmt->bindParam(':tournees', $data);

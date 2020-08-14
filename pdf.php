@@ -38,8 +38,15 @@ $stmtU->bindParam(':id', $user);
 $stmtU->execute();
 $user_info = $stmtU->fetch(PDO::FETCH_OBJ);
 
-//Rapport PDF
+if(isset($_POST['users2'])){
+    $user2 = $_POST['users2'];
+    $stmtU2 = $connexion->prepare("SELECT * FROM user WHERE id=:id");
+    $stmtU2->bindParam(':id', $user2);
+    $stmtU2->execute();
+    $user2_info = $stmtU2->fetch(PDO::FETCH_OBJ);
+}
 
+//Rapport PDF
 $pdf = new FPDF();
 $pdf->AddPage();
 $pdf->SetFont('Arial','B',16);
@@ -49,6 +56,9 @@ $pdf->Ln();
 $pdf->Cell(40,10, 'Effectue le '.date('d-m-Y'));
 $pdf->Ln();
 $pdf->Cell(40,10, 'par '.$user_info->prenom.' '.$user_info->nom);
+if($user2_info){
+    $pdf->Cell(40,10, ' et '.$user2_info->prenom.' '.$user2_info->nom);
+}
 $pdf->Ln();
 
 // loop
@@ -63,7 +73,13 @@ foreach( $result as $row ) {
     $pdf->Ln();
     $pdf->Ln();
 }
-$pdf->Output('F', 'rapports/tournée '.$result2->client.', '.$result2->nom.', '.$user_info->prenom.' '.$user_info->nom.' '.date('d-m-Y').'.pdf', true);
+
+//Output
+if($user2_info){
+    $pdf->Output('F', 'rapports/tournée '.$result2->client.', '.$result2->nom.', '.$user_info->prenom.' '.$user_info->nom.' et '.$user2_info->prenom.' '.$user2_info->nom.' '.date('d-m-Y').'.pdf', true);
+}else{
+    $pdf->Output('F', 'rapports/tournée '.$result2->client.', '.$result2->nom.', '.$user_info->prenom.' '.$user_info->nom.' '.date('d-m-Y').'.pdf', true);
+}
 
 echo "Le rapport PDF a été envoyé";
 
@@ -121,7 +137,13 @@ echo date('H:i:s') , " Write to Excel2007 format" , EOL;
 $callStartTime = microtime(true);
 
 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-$objWriter->save('rapports/tournée '.$result2->client.', '.$result2->nom.', '.$user_info->prenom.' '.$user_info->nom.' '.date('d-m-Y').'.xlsx');
+
+//Output
+if($user2_info){
+    $objWriter->save('rapports/tournée '.$result2->client.', '.$result2->nom.', '.$user_info->prenom.' '.$user_info->nom.' et '.$user2_info->prenom.' '.$user2_info->nom.' '.date('d-m-Y').'.xlsx');
+}else{
+    $objWriter->save('rapports/tournée '.$result2->client.', '.$result2->nom.', '.$user_info->prenom.' '.$user_info->nom.' '.date('d-m-Y').'.xlsx');
+}
 $callEndTime = microtime(true);
 $callTime = $callEndTime - $callStartTime;
 

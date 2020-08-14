@@ -53,6 +53,7 @@
         <div class="pdf">
             <form method="post" action="pdf.php">
                 <input type="hidden" name="users" id="users" value="">
+                <input type="hidden" name="users2" id="users2" value="">
                 <input type="hidden" name="tournee" id="tournee" value="">
                 <input type="submit" class="btn btn-success" name="pdf" value="Valider la tournée" action="pdf.php" id="pdf">
             </form>
@@ -63,8 +64,9 @@
         <div>
             <form method="post" action="reset.php">
                 <input type="hidden" name="user_info" id="user_info" value="">
+                <input type="hidden" name="user2_info" id="user2_info" value="">
                 <input type="hidden" name="tournee_info" id="tournee_info" value="">
-                <input type="submit" class="btn btn-warning" name="pdf" value="Réinitialiser la tournée" action="reset.php" id="reset">
+                <input type="submit" class="btn btn-warning" name="reset" value="Réinitialiser la tournée" action="reset.php" id="reset">
             </form>
         </div>
     </div>
@@ -139,11 +141,23 @@
                 }
              })
             document.getElementById("monitoring").innerHTML+='</ul>'
-            //transmettre l'id de la personne affectée à la tournée
-            document.getElementById("users").value=JSON.stringify(data[0].users.id).replace(/\"/g, "")
-            document.getElementById("user_info").value=JSON.stringify(data[0].users.id).replace(/\"/g, "")
+            //transmettre l'id de la (des) personne(s) affectée(s) à la tournée
+            document.getElementById("users").value=JSON.stringify(data[0].users[0].id).replace(/\"/g, "")
+            document.getElementById("users2").value=JSON.stringify(data[0].users[1].id).replace(/\"/g, "")
+
+            document.getElementById("user_info").value=JSON.stringify(data[0].users[0].id).replace(/\"/g, "")
+            document.getElementById("user2_info").value=JSON.stringify(data[0].users[1].id).replace(/\"/g, "")
+
             //Effectué par...
-            document.getElementById("doneBy").innerHTML='<h4>Effectué par '+JSON.stringify(data[0].users.prenom).replace(/\"/g, "")+' '+JSON.stringify(data[0].users.nom).replace(/\"/g, "")+'</h4>'
+            document.getElementById("doneBy").innerHTML='<h4>Effectué par '
+            +JSON.stringify(data[0].users[0].prenom).replace(/\"/g, "")
+            +' '+JSON.stringify(data[0].users[0].nom).replace(/\"/g, "")+'</h4>';
+            // Si 2 livreurs
+            if(JSON.stringify(data[0].users[1])){
+                document.getElementById("doneBy").innerHTML+=
+                '<h4> et '+JSON.stringify(data[0].users[1].prenom).replace(/\"/g, "")
+                +' '+JSON.stringify(data[0].users[1].nom).replace(/\"/g, "")+'</h4>'
+            }
         })
         .catch((error) => console.log(error));
     }

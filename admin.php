@@ -22,55 +22,64 @@
     $connexion = $database->getConnection();
     $stmt = $connexion->prepare("SELECT * FROM user");
     $stmt->execute();
-    $result = $stmt->fetchAll(PDO::FETCH_OBJ);
-
-    $stmtT = $connexion->prepare("SELECT * FROM tournees");
-    $stmtT->execute();
-    $tournees = $stmtT->fetchAll(PDO::FETCH_OBJ);
-    
+    $users = $stmt->fetchAll(PDO::FETCH_OBJ);
+  
     $stmtC = $connexion->prepare("SELECT * FROM clients");
     $stmtC->execute();
     $clients = $stmtC->fetchAll(PDO::FETCH_OBJ);
+    ?>
+    <select name="clients" id="clients-select" onchange="changeTournees(this.value)">
+    <option value="">Selectionnez un client</option>';
+    <?php
+    foreach($clients as $client){ //Choix du client
+        echo'<option value="'.$client->nom_client.'">'.$client->nom_client.'</option>';
+    }
+    ?>
+    </select>
 
-    foreach( $result as $row ) {
-        echo $row->prenom . " " . $row->nom . ", permis : " . $row->permis;
-        if ($row->tournees){echo ",  tournée assignée ".$tournees[$row->tournees-1]->nom;} //on affiche la tournée actuellement assignée s'il y a 
-        echo '<form id="form'.$row->id.'" method="post" action="admin.php">
-            Assigner une nouvelle tournée :
-            <select name="clients'.$row->id.'" id="clients-select'.$row->id.'" onchange="changeTournees(this.value, '.$row->id.')">
-            <option value="">Selectionnez un client</option>';
-            foreach($clients as $client){ //Choix du client
-                echo'<option value="'.$client->nom_client.'">'.$client->nom_client.'</option>';
-            }
-            echo '</select>
-
-            <select name="tournees'.$row->id.'" id="tournees-select'.$row->id.'">
-                <option value="">puis une tournée</option>
+    <div id="showUsers">
+        <form method="POST" action='admin.php'>
+            <select name="tournees" id="tournees-select" onchange="showUsers(this)">
+                <option value="" data-equipe="">puis une tournée</option>
             </select>
-
-            <input type="submit" value="valider" name="submit'.$row->id.'"></input>
-        </form><br>';
-        if (isset($_POST['submit'.$row->id])) {
-            $stmtUpdate = $connexion->prepare("UPDATE user SET tournees = ? WHERE id = ?");
-            if($_POST['tournees'.$row->id] == "null"){
-                $stmtUpdate->bindValue(1, null, PDO::PARAM_INT);
-            }else{
-                $stmtUpdate->bindValue(1, $_POST['tournees'.$row->id], PDO::PARAM_INT);
-            }
-            $stmtUpdate->bindValue(2, $row->id, PDO::PARAM_INT);
-            $stmtUpdate->execute();
-
-            //Rafraichir la page avec JS pour éviter les problèmes de header
-            ?><script type="text/javascript">window.location.href = 'http://localhost/Ben/admin.php';
-            </script><?php
+            <select name="user" id="user-select">
+                <option value="">Attribuer un livreur</option>
+                <?php
+                foreach($users as $user){
+                    echo'<option value="'.$user->id.'">'.$user->prenom.' '.$user->nom.' - Permis : '.$user->permis.'</option>';
+                }
+                ?>
+            </select>
+            <select name="user2" style='display:none' id="user2-select">
+                <option value="">Attribuer un 2ème livreur</option>
+                <?php
+                foreach($users as $user){
+                    echo'<option value="'.$user->id.'">'.$user->prenom.' '.$user->nom.' - Permis : '.$user->permis.'</option>';
+                }
+                ?>
+            </select>
+            <input type="submit" name="attribuer" value="Attribuer la tournée">
+        </form>
+    </div>
+</div>
+    <?php
+    // fonction pour attribuer la tournée en BDD
+    if(isset($_POST['attribuer'])){ 
+        $stmt = $connexion->prepare("UPDATE user SET tournees = ? WHERE id = ?");
+        $stmt->bindParam(1, $_POST['tournees']);
+        $stmt->bindParam(2, $_POST['user']);
+        $stmt->execute();
+        if($_POST['user2']){
+            $stmt = $connexion->prepare("UPDATE user SET tournees = ? WHERE id = ?");
+            $stmt->bindParam(1, $_POST['tournees']);
+            $stmt->bindParam(2, $_POST['user2']);
+            $stmt->execute();
         }
     }
     ?>
-</div>
-
 <script>
-    function changeTournees(that, id){
-        document.getElementById("tournees-select"+id).innerHTML=""
+    function changeTournees(that){
+        document.getElementById("tournees-select").innerHTML=""
         var url = "select_tournee.php"; // service url
         fetch(url, {
             method : 'POST',
@@ -80,14 +89,22 @@
             return response.json();
         })
         .then(function(data){
-            document.getElementById("tournees-select"+id).innerHTML
+            document.getElementById("tournees-select").innerHTML
             +=`<option value="">- Selectionnez -</option>`
             data.forEach(function(item){
-                document.getElementById("tournees-select"+id).innerHTML
-                +=`<option value="${JSON.stringify(item.id).replace(/\"/g, "")}">${JSON.stringify(item.nom).replace(/\"/g, "")}</option>`
+                document.getElementById("tournees-select").innerHTML
+                +=`<option value="${JSON.stringify(item.id).replace(/\"/g, "")}" data-equipe="${JSON.stringify(item.equipe).replace(/\"/g, "")}">${JSON.stringify(item.nom).replace(/\"/g, "")}</option>`
              })
         })
         .catch((error) => console.log(error));
+    }
+
+    function showUsers(that){
+        if(that.options[that.selectedIndex].getAttribute("data-equipe")=="Binôme"){
+            document.getElementById("user2-select").style.display = "inline";
+        }else{
+            document.getElementById("user2-select").style.display = "none";
+        }
     }
 </script>
 

@@ -86,8 +86,9 @@
         <input type="hidden" id="id'.$x->id.'" name="id" value="'.$x->id.'">
     
         <button class="btn btn-primary mr-2 btn-sm" onclick="updateOne('.$x->id.')" style="width:100px">Modifier</button>
-      
-        <input class="btn btn-danger btn-sm" type="submit" name="delete" value="Supprimer">
+
+        <button class="btn btn-danger btn-sm" onclick="deleteOne('.$x->id.')" style="width:100px">Supprimer</button>
+
         <div id="done'.$x->id.'"></div>
         </div>';
         }
@@ -97,6 +98,7 @@
     <br>
 
     <script>
+//update
     function updateOne(y){
         var url = "updateOne.php"; // service url
         var data = {}; 
@@ -118,6 +120,21 @@
             document.getElementById("done"+y).innerHTML=' Modifié !';
         })
         .catch((error) => console.log(error));
+    }
+//delete
+    function deleteOne(y){
+        var url = "deletePoint.php"; // service url
+ 
+        var data=(document.getElementById('id'+y).value);
+        var data = JSON.stringify(data);
+
+        fetch(url, {
+            method : 'POST',
+            body: data
+            })
+        .catch((error) => console.log(error));
+
+        location.reload(); 
     }
 
 // Script pour toggle/hide

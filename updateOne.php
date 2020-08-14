@@ -1,20 +1,10 @@
 <?php include_once 'Database.php'; ?>
 
-<head>
-	<meta http-equiv="refresh" content="5;URL=tournees.php"/>
-</head>
-
-<body>
 <?php
 
 // get Json
 $data = json_decode(file_get_contents("php://input"));
  
-// $point->id = $data->id;
-// $point->nom = $data->pseudo;
-
-
-
 try{
     $database = new Database();
     $connexion = $database->getConnection();
@@ -27,7 +17,6 @@ try{
     $stmtA->bindParam(6, $data->exemplaires);
     $stmtA->bindParam(7, $data->categorie); 
     $stmtA->bindParam(8, $data->id); 
-    // update the user
     if($stmtA->execute()) {
         // set response code - 200 ok
     http_response_code(200);
@@ -35,7 +24,6 @@ try{
     echo json_encode(array("message" => "Le point a été modifié"));
     }
 
-    // if unable to update the user, tell  me !
     else{
         // set response code - 503 service unavailable
     http_response_code(503);
@@ -49,4 +37,3 @@ catch (PDOException $error){
 
 
 ?>
-</body>
