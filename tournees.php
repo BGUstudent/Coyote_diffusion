@@ -68,48 +68,66 @@
 <br>
 
 <!-- Afficher les points d'une tournée -->
-    <br><div id=points>
+    <br><ul id="points">
     <?php
-    $stmtP = $connexion->prepare("SELECT * FROM points WHERE tournees = ? ");
+    $stmtP = $connexion->prepare("SELECT * FROM points WHERE tournees = ? ORDER BY ordre ASC");
     $stmtP->bindValue(1, $_POST['tournees'], PDO::PARAM_STR);
     $stmtP->execute();
     $points = $stmtP->fetchAll(PDO::FETCH_OBJ);
     foreach($points as $x){
-        if($x->motif && $x->motif !== "livré"){
-            echo'<div style="max-width:1404px;" class="bg-danger">Lors de la dernière tournée : <b>'.$x->motif.'</b></div>';
-        }elseif($x->motif && $x->exemplaires > $x->distribués){
-            echo'<div style="max-width:1404px;" class="bg-warning">Lors de la dernière tournée : <b>'.$x->motif.'</b>, '.$x->distribués.' exemplaires distribués</div>';
-        }
-        if($x->exemplaires < $x->distribués){
-            echo'<div style="max-width:1404px;" class="bg-success">Lors de la dernière tournée : <b>'.$x->motif.'</b>, '.$x->distribués.' exemplaires distribués</div>';
-        }
-        if($x->commentaires){
-            echo'<div style="max-width:1404px;" class="bg-info">Commentaire du livreur :'.$x->commentaires.'</div>';
-        }
-        echo '<div class="form-inline mb-4" method="post" action="">
-        <input class="form-control mr-sm-1" type="text" id="nom'.$x->id.'" name="nom" value="'.$x->nom.'">
-        <input class="form-control mr-sm-1" type="text" id="adresse'.$x->id.'" name="adresse" value="'.$x->adresse.'">
-        <input class="form-control mr-sm-1" type="text" id="codePostal'.$x->id.'" name="codePostal" value="'.$x->code_postal.'">
-        <input class="form-control mr-sm-1" type="text" id="ville'.$x->id.'" name="ville" value="'.$x->ville.'">
-        <input class="form-control mr-sm-1" type="text" placeholder="infos" id="infos'.$x->id.'" name="infos" value="'.$x->infos.'">
-        <input class="form-control mr-sm-1" style="max-width:60px;" type="text" id="exemplaires'.$x->id.'" name="exemplaires" value="'.$x->exemplaires.'">
-        <input class="form-control mr-sm-1" type="text" id="categorie'.$x->id.'" name="categorie" value="'.$x->categorie.'">
-        <input type="hidden" id="id'.$x->id.'" name="id" value="'.$x->id.'">
-    
-        <button class="btn btn-primary mr-2 btn-sm" onclick="updateOne('.$x->id.')" style="width:100px">Modifier</button>
+        echo'<div id="'.$x->id.'">';
+            if($x->motif && $x->motif !== "livré"){
+                echo'<div style="max-width:1404px;" class="bg-danger">Lors de la dernière tournée : <b>'.$x->motif.'</b></div>';
+            }elseif($x->motif && $x->exemplaires > $x->distribués){
+                echo'<div style="max-width:1404px;" class="bg-warning">Lors de la dernière tournée : <b>'.$x->motif.'</b>, '.$x->distribués.' exemplaires distribués</div>';
+            }
+            if($x->exemplaires < $x->distribués){
+                echo'<div style="max-width:1404px;" class="bg-success">Lors de la dernière tournée : <b>'.$x->motif.'</b>, '.$x->distribués.' exemplaires distribués</div>';
+            }
+            if($x->commentaires){
+                echo'<div style="max-width:1404px;" class="bg-info">Commentaire du livreur : '.$x->commentaires.'</div>';
+            }
+            echo '<li class="form-inline mb-4" method="post" action="">
+            <input class="form-control mr-sm-1" type="text" id="nom'.$x->id.'" name="nom" value="'.$x->nom.'">
+            <input class="form-control mr-sm-1" type="text" id="adresse'.$x->id.'" name="adresse" value="'.$x->adresse.'">
+            <input class="form-control mr-sm-1" type="text" id="codePostal'.$x->id.'" name="codePostal" value="'.$x->code_postal.'">
+            <input class="form-control mr-sm-1" type="text" id="ville'.$x->id.'" name="ville" value="'.$x->ville.'">
+            <input class="form-control mr-sm-1" type="text" placeholder="infos" id="infos'.$x->id.'" name="infos" value="'.$x->infos.'">
+            <input class="form-control mr-sm-1" style="max-width:60px;" type="text" id="exemplaires'.$x->id.'" name="exemplaires" value="'.$x->exemplaires.'">
+            <input class="form-control mr-sm-1" type="text" id="categorie'.$x->id.'" name="categorie" value="'.$x->categorie.'">
+            <input type="hidden" id="id'.$x->id.'" name="id" value="'.$x->id.'">
+        
+            <button class="btn btn-primary mr-2 btn-sm" onclick="updateOne('.$x->id.')" style="width:100px">Modifier</button>
 
-        <button class="btn btn-danger btn-sm" onclick="deleteOne('.$x->id.')" style="width:100px">Supprimer</button>
+            <button class="btn btn-danger btn-sm" onclick="deleteOne('.$x->id.')" style="width:100px">Supprimer</button>
 
-        <div id="done'.$x->id.'"></div>
+            <div id="done'.$x->id.'"></div>
+            </li>
         </div>';
     }
+    echo'</ul>';
 }
     ?>
     </div>
-    <br>
-
+        
     <script>
-//update
+    $(document).ready(function () {
+        $('ul').sortable({
+            axis: 'y',
+            stop: function (event, ui) {
+                var data = $(this).sortable('toArray');
+                var url = "updateOrder.php"; // service url
+                var data = JSON.stringify(data);
+                fetch(url, {
+                    method : 'PUT',
+                    body: data
+                })
+                .catch((error) => console.log(error));
+
+            }
+        });
+    });
+    //update
     function updateOne(y){
         var url = "updateOne.php"; // service url
         var data = {}; 
