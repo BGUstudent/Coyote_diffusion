@@ -40,7 +40,7 @@
     //On affiche les points de distributions attribués
     $database = new Database();
     $connexion = $database->getConnection();    
-    $stmt = $connexion->prepare("SELECT * FROM points WHERE tournees=:tournees AND exemplaires > 0");
+    $stmt = $connexion->prepare("SELECT * FROM points WHERE tournees=:tournees AND exemplaires > 0 ORDER BY ordre ASC");
     $stmt->bindParam(':tournees', $tournee);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -54,8 +54,7 @@
         . $row->ville . " </span><br>" 
         . $row->exemplaires. " exemplaires <button class='btn btn-primary float-right' data-toggle='modal' data-target='#exampleModal".$row->id."'>Terminé</button>";// onclick='message(".$row->exemplaires.",".$row->id.")'
         if ($row->infos != ""){
-            echo "<button class='btn btn-link' onclick='expand(".$row->id.")'>+ d'infos</button>
-            <div style='display:none' id='infos".$row->id."'>".$row->infos."</div>";
+            echo "<div style='color:#ff5c11' id='infos".$row->id."'><b>".$row->infos."</b></div>";
         }
         // Menu modal
         echo'
@@ -99,16 +98,7 @@
     ?>
 </div>
 
-<!-- Script pour toggle/hide les infos supp -->
-    <script>
-    function expand(id) {
-        var x = document.getElementById("infos"+id);
-        if (x.style.display === "block") {
-            x.style.display = "none";
-        } else {
-            x.style.display = "block";
-        }
-    }
+<script>
 
 // Script pour copier
     function copy(i) {

@@ -28,7 +28,7 @@
     $stmtC->execute();
     $clients = $stmtC->fetchAll(PDO::FETCH_OBJ);
 
-    $stmtT = $connexion->prepare("SELECT u.id, u.prenom, u.nom, u.permis, t.client, t.nom as tt FROM user as u LEFT JOIN tournees AS t ON (u.tournees=t.id)");
+    $stmtT = $connexion->prepare("SELECT u.id, u.prenom, u.nom, u.permis, t.client, t.next_date, t.nom as tt FROM user as u LEFT JOIN tournees AS t ON (u.tournees=t.id)");
     $stmtT->execute();
     $userJ = $stmtT->fetchAll(PDO::FETCH_OBJ);
     ?>
@@ -41,12 +41,12 @@
             }
             ?>
         </select>
-
         <div id="showUsers">
             <form method="POST" action=''>
                 <select class="custom-select custom-select mb-1" name="tournees" id="tournees-select" onchange="showUsers(this)">
                     <option value="" data-equipe="">puis une tournée</option>
                 </select>
+                Date de la tournée : <input type="date" id="date" name="date">
                 <select class="custom-select custom-select mb-1" name="user" id="user-select">
                     <option value="">Attribuer un livreur</option>
                     <?php
@@ -72,7 +72,7 @@
         <?php
             foreach($userJ as $user){
                 if($user->tt){
-                    echo $user->client.' - '.$user->tt.' attribué à '.$user->prenom.' '.$user->nom.'<br>';
+                    echo 'le '. date("l d F", strtotime($user->next_date)) .' : '.$user->client.' - tournée '.$user->tt.' attribué à '.$user->prenom.' '.$user->nom.'<br>';
                 }
             }
         ?>
@@ -85,13 +85,17 @@ if(isset($_POST['attribuer'])){
     $stmt->bindParam(1, $_POST['tournees']);
     $stmt->bindParam(2, $_POST['user']);
     $stmt->execute();
+    $stmtD = $connexion->prepare("UPDATE tournees SET next_date = ? WHERE id = ?");
+    $stmtD->bindParam(1, $_POST['date']);
+    $stmtD->bindParam(2, $_POST['tournees']);
+    $stmtD->execute();
     if($_POST['user2']){
         $stmt = $connexion->prepare("UPDATE user SET tournees = ? WHERE id = ?");
         $stmt->bindParam(1, $_POST['tournees']);
         $stmt->bindParam(2, $_POST['user2']);
         $stmt->execute();
     }
-    echo("<script>location.href = 'admin.php';</script>");
+    // echo("<script>location.href = 'admin.php';</script>");
 }
 ?>
 <script>

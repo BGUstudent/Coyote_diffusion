@@ -76,6 +76,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="read_reporting.php">Consulter les rapports de distribution</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="stat.php">Statistiques</a>
+                </li>
             </ul>
             <ul class="encart navbar-nav border border-secondary rounded">
                 <li class="nav-item">

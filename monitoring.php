@@ -55,18 +55,18 @@
                 <input type="hidden" name="users" id="users" value="">
                 <input type="hidden" name="users2" id="users2" value="">
                 <input type="hidden" name="tournee" id="tournee" value="">
-                <input type="submit" class="btn btn-success" name="pdf" value="Valider la tournée" action="pdf.php" id="pdf">
+                <input type="submit" class="btn btn-success" name="pdf" value="Editer PDF et Excel" action="pdf.php" id="pdf">
             </form>
         </div>
         <br>
 
         <!-- Reset -->
         <div>
-            <form method="post" action="reset.php">
+            <form method="post" action="reset.php" onSubmit="return confirm('Réinitialiser la tournée?')">
                 <input type="hidden" name="user_info" id="user_info" value="">
                 <input type="hidden" name="user2_info" id="user2_info" value="">
                 <input type="hidden" name="tournee_info" id="tournee_info" value="">
-                <input type="submit" class="btn btn-warning" name="reset" value="Réinitialiser la tournée" action="reset.php" id="reset">
+                <input type="submit" class="btn btn-warning" name="reset" value="Cloturer la tournée" action="reset.php" id="reset">
             </form>
         </div>
     </div>

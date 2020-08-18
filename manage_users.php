@@ -24,11 +24,16 @@
     foreach($users as $user){
         $user->accreditation == 2 ? $accred='Admin' : $accred='User'; 
         echo $user->prenom.' '.$user->nom. ", permis : " . $user->permis.', '.$accred.', '.$user->email. ', tournée actuelle : '.$user->tt.
-        '<form class="form" action="delete_user.php" method="POST">
-        <input type="hidden" name="id" value="'.$user->id.'">
-        <input class="btn btn-danger btn-sm" type="submit" name="submitD'.$user->id.'" value="Supprimer"></form><br>';
+        '<form action="updateUser.php" method="POST">
+            <input type="hidden" name="id" value="'.$user->id.'">
+            <input class="btn btn-primary" type="submit" name="submitU'.$user->id.'" value="Modifier">
+        </form>
+        <form action="delete_user.php" method="POST" onSubmit="return confirm(\'Supprimer cet utilisateur?\')">
+            <input type="hidden" name="id" value="'.$user->id.'">
+            <input class="btn btn-danger btn-sm" type="submit" name="submitD'.$user->id.'" value="Supprimer">
+        </form><br>';
     }
-?>
+    ?>
 
 <!-- formulaire d'ajout -->
 <br><h5>Ajouter un utilisateur</h5>

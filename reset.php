@@ -10,7 +10,7 @@
 include_once 'Database.php'; 
 
 session_start();
-if($_SESSION['user']->accreditation < 1 && $_SESSION['user']->accreditation > 2){
+if($_SESSION['user']->accreditation!=2){
     header("Location:index.php");
 };
 
@@ -18,8 +18,9 @@ if($_SESSION['user']->accreditation < 1 && $_SESSION['user']->accreditation > 2)
 $tournee = $_POST['tournee_info'];
 
 $database = new Database();
-$connexion = $database->getConnection();    
-$stmt = $connexion->prepare("UPDATE points SET last_update=NULL, heure=NULL, distribués=0, motif=NULL WHERE tournees=?");
+$connexion = $database->getConnection();   
+
+$stmt = $connexion->prepare("UPDATE points SET last_update=NULL, heure=NULL, distribués=0, motif=NULL, commentaires=NULL WHERE tournees=?");
 $stmt->bindParam(1, $tournee);
 if($stmt->execute()){
     echo 'les points de la tournée ont été réinitialisés';
@@ -43,4 +44,7 @@ if(isset($_POST['user2_info'])){
     $stmtR2->execute();
 }
 
+$stmtD = $connexion->prepare("UPDATE tournees SET next_date=NULL WHERE id = ?");
+$stmtD->bindParam(1, $tournee);
+$stmtD->execute();
 ?>

@@ -13,7 +13,7 @@ require('Classes/PHPExcel.php');
 include_once 'Database.php'; 
 
 session_start();
-if($_SESSION['user']->accreditation < 1 && $_SESSION['user']->accreditation > 2){
+if($_SESSION['user']->accreditation!=2){
     header("Location:index.php");
 };
 
@@ -76,9 +76,9 @@ foreach( $result as $row ) {
 
 //Output
 if($user2_info){
-    $pdf->Output('F', 'rapports/tournée '.$result2->client.', '.$result2->nom.', '.$user_info->prenom.' '.$user_info->nom.' et '.$user2_info->prenom.' '.$user2_info->nom.' '.date('d-m-Y').'.pdf', true);
+    $pdf->Output('F', 'rapports/'.$result2->next_date.' '.$result2->client.', '.$result2->nom.' - '.$user_info->prenom.' '.$user_info->nom.' et '.$user2_info->prenom.' '.$user2_info->nom.' '.date('d-m-Y').'.pdf', true);
 }else{
-    $pdf->Output('F', 'rapports/tournée '.$result2->client.', '.$result2->nom.', '.$user_info->prenom.' '.$user_info->nom.' '.date('d-m-Y').'.pdf', true);
+    $pdf->Output('F', 'rapports/'.$result2->next_date.' '.$result2->client.', '.$result2->nom.' - '.$user_info->prenom.' '.$user_info->nom.' '.date('d-m-Y').'.pdf', true);
 }
 
 echo "Le rapport PDF a été envoyé";
@@ -140,13 +140,13 @@ $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
 
 //Output
 if($user2_info){
-    $objWriter->save('rapports/tournée '.$result2->client.', '.$result2->nom.', '.$user_info->prenom.' '.$user_info->nom.' et '.$user2_info->prenom.' '.$user2_info->nom.' '.date('d-m-Y').'.xlsx');
+    $objWriter->save('rapports/'.$result2->next_date.' '.$result2->client.', '.$result2->nom.' - '.$user_info->prenom.' '.$user_info->nom.' et '.$user2_info->prenom.' '.$user2_info->nom.' '.date('d-m-Y').'.xlsx');
 }else{
-    $objWriter->save('rapports/tournée '.$result2->client.', '.$result2->nom.', '.$user_info->prenom.' '.$user_info->nom.' '.date('d-m-Y').'.xlsx');
+    $objWriter->save('rapports/'.$result2->next_date.' '.$result2->client.', '.$result2->nom.' - '.$user_info->prenom.' '.$user_info->nom.' '.date('d-m-Y').'.xlsx');
 }
 $callEndTime = microtime(true);
 $callTime = $callEndTime - $callStartTime;
 
-echo date('H:i:s') , ' File written to rapports/tournée'.$result2->client.', '.$result2->nom.', '.$user_info->prenom.' '.$user_info->nom.' '.date('d-m-Y').'.xlsx';
+echo date('H:i:s') , ' File written to rapports/tournée'.$result2->next_date.' '.$result2->client.' - '.$result2->nom.', '.$user_info->prenom.' '.$user_info->nom.' '.date('d-m-Y').'.xlsx';
 
 ?>

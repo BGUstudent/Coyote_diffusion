@@ -24,9 +24,10 @@
     foreach($clients as $client){
         echo $client->nom_client.
         //bouton delete
-        '<form action="delete_client.php" method="POST">
-        <input type="hidden" name="nom_client" value="'.$client->nom_client.'">
-        <input type="submit" class="btn btn-danger btn-sm" name="submitD'.$client->nom_client.'" value="Supprimer"></form><br>';
+        '<form action="delete_client.php" method="POST" onSubmit="return confirm(\'Supprimer le client?\')">
+            <input type="hidden" name="nom_client" value="'.$client->nom_client.'">
+            <input type="submit" class="btn btn-danger btn-sm" name="submitD'.$client->nom_client.'" value="Supprimer">
+        </form><br>';
     }
     ?>
     <!-- formulaire d'ajout -->
