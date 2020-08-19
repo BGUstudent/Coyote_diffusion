@@ -17,21 +17,21 @@
     <?php
     $database = new Database();
     $connexion = $database->getConnection();
-    $stmt = $connexion->prepare("SELECT u.id, u.prenom, u.nom, u.email, u.accreditation, u.permis, t.nom as tt FROM user as u LEFT JOIN tournees AS t ON (u.tournees=t.id)");
+    $stmt = $connexion->prepare("SELECT u.id, u.prenom, u.nom, u.email, u.numero, u.accreditation, u.permis, t.nom as tt FROM user as u LEFT JOIN tournees AS t ON (u.tournees=t.id)");
     $stmt->execute(); 
     $users = $stmt->fetchAll(PDO::FETCH_OBJ);   
 
     foreach($users as $user){
         $user->accreditation == 2 ? $accred='Admin' : $accred='User'; 
-        echo $user->prenom.' '.$user->nom. ", permis : " . $user->permis.', '.$accred.', '.$user->email. ', tournée actuelle : '.$user->tt.
-        '<form action="updateUser.php" method="POST">
+        echo '<div class="card p-2" style="max-width: 340px;"><b>'.$user->prenom.' '.$user->nom. "</b><br>Permis : " . $user->permis.'<br>Niveau d\'accreditation : '.$accred.'<br>Contact : '.$user->email.$user->numero.'<br>Tournée actuelle : '.$user->tt.
+        '<div class="form-inline"><form class="form-inline mr-4" action="updateUser.php" method="POST">
             <input type="hidden" name="id" value="'.$user->id.'">
-            <input class="btn btn-primary" type="submit" name="submitU'.$user->id.'" value="Modifier">
+            <input class="btn btn-primary btn-sm" type="submit" name="submitU'.$user->id.'" value="Modifier">
         </form>
-        <form action="delete_user.php" method="POST" onSubmit="return confirm(\'Supprimer cet utilisateur?\')">
+        <form class="form-inline" action="delete_user.php" method="POST" onSubmit="return confirm(\'Supprimer cet utilisateur?\')">
             <input type="hidden" name="id" value="'.$user->id.'">
             <input class="btn btn-danger btn-sm" type="submit" name="submitD'.$user->id.'" value="Supprimer">
-        </form><br>';
+        </form></div></div><br>';
     }
     ?>
 

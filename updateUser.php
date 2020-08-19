@@ -28,7 +28,7 @@
     <input type="text" class="form-control mr-sm-1" id="prenom" name="prenom" value="<?php echo $user->prenom ?>" required>
     <input type="text" class="form-control mr-sm-1" id="nom" name="nom" value="<?php echo $user->nom ?>" required>
     <?php
-    if($user->accreditation===2){
+    if($user->accreditation==2){
         echo'<input type="text" class="form-control mr-sm-1" name="email" value="'. $user->email.'" required>';
     }else{
         echo'<input type="text" class="form-control mr-sm-1" name="numero" value="'.$user->numero.'" required>';

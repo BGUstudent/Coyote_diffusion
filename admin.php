@@ -89,13 +89,13 @@ if(isset($_POST['attribuer'])){
     $stmtD->bindParam(1, $_POST['date']);
     $stmtD->bindParam(2, $_POST['tournees']);
     $stmtD->execute();
-    if($_POST['user2']){
+        if($_POST['user2']){
         $stmt = $connexion->prepare("UPDATE user SET tournees = ? WHERE id = ?");
         $stmt->bindParam(1, $_POST['tournees']);
         $stmt->bindParam(2, $_POST['user2']);
         $stmt->execute();
     }
-    // echo("<script>location.href = 'admin.php';</script>");
+    echo("<script>location.href = 'admin.php';</script>");
 }
 ?>
 <script>

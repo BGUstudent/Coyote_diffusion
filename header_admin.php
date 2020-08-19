@@ -19,6 +19,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <link rel="icon" type="img/logo_square.png" href="img/logo_square.png">
     <title>admin board</title>
     <style>
         .back-to-top {
@@ -55,29 +56,30 @@
                 <li class="nav-item">
                     <a class="nav-link" href="admin.php">Assigner une tournée</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="manage_users.php">Gérer les utilisateurs</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="manage_clients.php">Gérer les clients</a>
-                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="tournees.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Gérer les tournées
-                    </a>
+                    Gérer les tournées</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="tournees.php">Modifier les points de distributions</a>
                         <a class="dropdown-item" href="add_tournee.php">Ajouter une tournée</a>
                     </div>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="manage_clients.php">Gérer les clients</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="manage_users.php">Gérer les utilisateurs</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="monitoring.php">Monitoring</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="read_reporting.php">Consulter les rapports de distribution</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="stat.php">Statistiques</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="tournees.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Data</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="nav-link" href="stat.php">Statistiques</a>
+                        <a class="nav-link" href="read_reporting.php">Consulter les rapports de distribution</a>
+                    </div>
                 </li>
             </ul>
             <ul class="encart navbar-nav border border-secondary rounded">

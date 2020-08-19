@@ -107,7 +107,7 @@ if(isset($_POST['submit'])){
     $result = $stmt->fetchAll(PDO::FETCH_OBJ);
 
     //afficher les résultats
-    // echo $sql;
+    echo $sql;
     echo '<br><h5>'.count($result).' points trouvés</h5><br>
     <div id="liste">';
     foreach($result as $x){
