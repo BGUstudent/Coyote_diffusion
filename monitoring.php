@@ -1,4 +1,5 @@
-<?php include_once 'Database.php'; ?>
+<?php include_once 'Database.php';
+include 'header_admin.php';?>
 
 <!DOCTYPE html>
 
@@ -10,9 +11,6 @@
 </head>
 <body>
 
-<!-- header -->
-<?php include 'header_admin.php';?>
-<br>
 <div class="container">
 
     <h3>Choisir une tournée </h3>
@@ -23,7 +21,7 @@
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_OBJ);
 
-    $stmtT = $connexion->prepare("SELECT * FROM tournees");
+    $stmtT = $connexion->prepare("SELECT * FROM rounds");
     $stmtT->execute();
     $tournees = $stmtT->fetchAll(PDO::FETCH_OBJ);
     
@@ -143,10 +141,7 @@
             document.getElementById("monitoring").innerHTML+='</ul>'
             //transmettre l'id de la (des) personne(s) affectée(s) à la tournée
             document.getElementById("users").value=JSON.stringify(data[0].users[0].id).replace(/\"/g, "")
-            document.getElementById("users2").value=JSON.stringify(data[0].users[1].id).replace(/\"/g, "")
-
             document.getElementById("user_info").value=JSON.stringify(data[0].users[0].id).replace(/\"/g, "")
-            document.getElementById("user2_info").value=JSON.stringify(data[0].users[1].id).replace(/\"/g, "")
 
             //Effectué par...
             document.getElementById("doneBy").innerHTML='<h4>Effectué par '
@@ -158,6 +153,9 @@
                 '<h4> et '+JSON.stringify(data[0].users[1].prenom).replace(/\"/g, "")
                 +' '+JSON.stringify(data[0].users[1].nom).replace(/\"/g, "")+'</h4>'
             }
+            document.getElementById("users2").value=JSON.stringify(data[0].users[1].id).replace(/\"/g, "")
+            document.getElementById("user2_info").value=JSON.stringify(data[0].users[1].id).replace(/\"/g, "")
+
         })
         .catch((error) => console.log(error));
     }

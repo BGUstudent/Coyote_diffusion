@@ -1,4 +1,5 @@
-<?php include_once 'Database.php'; ?>
+<?php include_once 'Database.php';
+include 'header_admin.php';?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -8,18 +9,16 @@
     <title>utilisateurs</title>
 </head>
 <body>
-    <!-- header -->
-    <?php include 'header_admin.php';?>
-    <br>
+
     <div class="container">
 
     <h4>Liste des utilisateurs enregistrés</h4><br>
     <?php
     $database = new Database();
     $connexion = $database->getConnection();
-    $stmt = $connexion->prepare("SELECT u.id, u.prenom, u.nom, u.email, u.numero, u.accreditation, u.permis, t.nom as tt FROM user as u LEFT JOIN tournees AS t ON (u.tournees=t.id)");
+    $stmt = $connexion->prepare("SELECT u.id, u.prenom, u.nom, u.email, u.numero, u.accreditation, u.permis, t.nom as tt FROM user as u LEFT JOIN rounds AS t ON (u.tournees=t.id)");
     $stmt->execute(); 
-    $users = $stmt->fetchAll(PDO::FETCH_OBJ);   
+    $users = $stmt->fetchAll(PDO::FETCH_OBJ);
 
     foreach($users as $user){
         $user->accreditation == 2 ? $accred='Admin' : $accred='User'; 

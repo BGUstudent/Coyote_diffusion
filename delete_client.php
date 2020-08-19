@@ -15,4 +15,3 @@ echo "Le client ".$_POST['nom_client']." a été supprimé";
 ?>
 
 </body>
-

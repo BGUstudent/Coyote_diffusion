@@ -1,3 +1,5 @@
+<?php include 'header_admin.php';?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -6,9 +8,7 @@
     <title>Consulter les reportings</title>
 </head>
 <body>
-    <!-- header -->
-    <?php include 'header_admin.php';?>
-    <br>
+
     <div class="container">
 
     <?php

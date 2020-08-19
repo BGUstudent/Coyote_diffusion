@@ -1,4 +1,5 @@
-<?php include_once 'Database.php'; ?>
+<?php include_once 'Database.php';
+include 'header_admin.php';?>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -8,9 +9,6 @@
     <title>gérer les tournées</title>
 </head>
 <body>
-    <!-- header -->
-    <?php include 'header_admin.php';?>
-    <br>
 <div class="container-fluid">
 
     <!-- Selection de la tournée -->
@@ -21,7 +19,7 @@
         <?php
         $database = new Database();
         $connexion = $database->getConnection();
-        $stmt = $connexion->prepare("SELECT * FROM tournees");
+        $stmt = $connexion->prepare("SELECT * FROM rounds");
         $stmt->execute();
         $tournees = $stmt->fetchAll(PDO::FETCH_OBJ);
         foreach($tournees as $row){
@@ -34,7 +32,7 @@
     <br>
     <?php
     if(isset($_POST['submitT'])){ 
-        $stmtA = $connexion->prepare("SELECT nom FROM tournees WHERE id=?");
+        $stmtA = $connexion->prepare("SELECT nom FROM rounds WHERE id=?");
         $stmtA->bindValue(1, $_POST['tournees'], PDO::PARAM_STR);
         $stmtA->execute(); 
         $nom_tournee = $stmtA->fetch(PDO::FETCH_OBJ);   

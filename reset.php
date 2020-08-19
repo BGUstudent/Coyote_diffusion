@@ -1,3 +1,10 @@
+<?php
+include_once 'Database.php'; 
+
+session_start();
+if($_SESSION['user']->accreditation!=2){
+    header("Location:index.php");
+};?>
 <head>
     <title>reset</title>
     <meta charset="UTF-8">
@@ -7,12 +14,6 @@
 </head>
 
 <?php
-include_once 'Database.php'; 
-
-session_start();
-if($_SESSION['user']->accreditation!=2){
-    header("Location:index.php");
-};
 
 //On recupere les données de la tournée affectée à cet utlisateur
 $tournee = $_POST['tournee_info'];
@@ -44,7 +45,7 @@ if(isset($_POST['user2_info'])){
     $stmtR2->execute();
 }
 
-$stmtD = $connexion->prepare("UPDATE tournees SET next_date=NULL WHERE id = ?");
+$stmtD = $connexion->prepare("UPDATE rounds SET next_date=NULL WHERE id = ?");
 $stmtD->bindParam(1, $tournee);
 $stmtD->execute();
 ?>

@@ -1,3 +1,8 @@
+<?php
+include_once 'Database.php'; 
+include 'header_admin.php';
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -6,13 +11,9 @@
     <title>stat</title>
 </head>
 <body>
-<!-- header -->
-<?php include 'header_admin.php';?>
-<br>
+
 <div class="container">
-<?php
-include_once 'Database.php'; 
-?>
+
 <!-- Selection de la categorie -->
 <h4>Selectionner une catégorie</h4>
 
@@ -107,7 +108,7 @@ if(isset($_POST['submit'])){
     $result = $stmt->fetchAll(PDO::FETCH_OBJ);
 
     //afficher les résultats
-    echo $sql;
+    // echo $sql;
     echo '<br><h5>'.count($result).' points trouvés</h5><br>
     <div id="liste">';
     foreach($result as $x){

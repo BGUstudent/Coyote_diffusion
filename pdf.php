@@ -28,7 +28,7 @@ $stmt->bindParam(':tournees', $tournee);
 $stmt->execute();
 $result = $stmt->fetchAll(PDO::FETCH_OBJ);
 
-$stmt2 = $connexion->prepare("SELECT * FROM tournees WHERE id=:tournees");
+$stmt2 = $connexion->prepare("SELECT * FROM rounds WHERE id=:tournees");
 $stmt2->bindParam(':tournees', $tournee);
 $stmt2->execute();
 $result2 = $stmt2->fetch(PDO::FETCH_OBJ);

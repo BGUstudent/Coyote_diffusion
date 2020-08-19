@@ -12,7 +12,7 @@ $connexion = $database->getConnection();
  
 $data = json_decode(file_get_contents("php://input"));
 
-    $stmt = $connexion->prepare("SELECT * FROM tournees WHERE client=?");
+    $stmt = $connexion->prepare("SELECT * FROM rounds WHERE client=?");
     $stmt->bindParam(1, $data);
     if($stmt->execute()) {
         $tournees = $stmt->fetchAll(PDO::FETCH_OBJ);

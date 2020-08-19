@@ -1,4 +1,6 @@
-<?php include_once 'Database.php'; ?>
+<?php include_once 'Database.php'; 
+	session_start();// on démarre une session
+?>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -12,7 +14,7 @@
     <title>login</title>
 </head>
 <body>
-	<img src="img/COYOTE_LOGO_final.png" style="max-width: 310px;" class="img-fluid rounded mx-auto d-block" alt="logo_coyote">
+	<img src="img/COYOTE_LOGO_315.png" style="max-width: 310px;" class="img-fluid rounded mx-auto d-block" alt="logo_coyote">
     <!-- Login Form -->
 	<div class="form mx-auto mt-5" style="width: 310px;">
 		<form method="post" action="index.php">
@@ -38,8 +40,6 @@
 	</br>
 
 <?php
-	session_start();// on démarre une session
-
 	if (isset($_POST['submit'])) {	// on vérifie que les inputs soient remplis
 		$email = $_POST['email']; //on récup l'input email et on l'affecte
 		$email = sanitize($email); //on nettoie pour éviter les erreurs et les injections (fonction en bas)
@@ -62,10 +62,11 @@
 		if( $say > 0 ){
 			// renvoi à différents menus selon accreditation
 			if ($accreditation == 1){
-				header('location:user.php');
+				echo '<script>window.location.replace("user.php")</script>';
 			}elseif ($accreditation == 2){
-				header('location:admin.php');
+				echo '<script>window.location.replace("admin.php")</script>';
 			}  
+			echo $_SESSION['user']->accreditation;
 		}else{
 			echo "C'est mort";
 		}    

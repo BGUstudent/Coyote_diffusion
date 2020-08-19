@@ -1,4 +1,5 @@
-<?php include_once 'Database.php'; ?>
+<?php include_once 'Database.php';
+include 'header_admin.php';?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -8,9 +9,6 @@
     <title>utilisateurs</title>
 </head>
 <body>
-    <!-- header -->
-    <?php include 'header_admin.php';?>
-    <br>
     <div class="container">
 
     <h4>Liste des clients enregistrés</h4><br>

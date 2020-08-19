@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-
 <?php
     if (!isset($_SESSION)){
         session_start();
@@ -8,6 +6,7 @@
 		header("Location:index.php");
 	};
 ?>
+<!DOCTYPE html>
 
 <html lang="fr">
 <head>
@@ -19,8 +18,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-    <link rel="icon" type="img/logo_square.png" href="img/logo_square.png">
-    <title>admin board</title>
+    <link rel="icon" type="img/logo_square.png" href="img/logo_square_30.png">
     <style>
         .back-to-top {
         position: fixed;
@@ -44,7 +42,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="admin.php"><img src="img/COYOTE_LOGO_final.png" alt="logo_coyote" style="max-width: 100px;"></a>
+        <a class="navbar-brand" href="admin.php"><img src="img/COYOTE_LOGO_120.png" alt="logo_coyote" style="max-width: 100px;"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>

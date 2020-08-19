@@ -8,8 +8,7 @@
 <?php
 $database = new Database();
 $connexion = $database->getConnection();
-$stmt = $connexion->prepare("INSERT INTO user(prenom, nom, numero, password, accreditation, permis) 
-VALUES (?, ?, ?, ?, ?, ?) ");
+$stmt = $connexion->prepare("INSERT INTO user(prenom, nom, numero, password, accreditation, permis) VALUES (?, ?, ?, ?, ?, ?) ");
 $stmt->bindParam(1, $_POST['prenom']);
 $stmt->bindParam(2, $_POST['nom']);
 $stmt->bindParam(3, $_POST['tel']);

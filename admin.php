@@ -1,19 +1,13 @@
-<?php include_once 'Database.php'; ?>
+<?php include 'header_admin.php';
+ include_once 'Database.php'; ?>
 
 <!DOCTYPE html>
 
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>admin board</title>
 </head>
 <body>
-
-    <!-- header -->
-    <?php include 'header_admin.php';?>
-    <br>
-
 <div class="container">
     <h2>Assigner une tournée</h2>
 
@@ -28,7 +22,7 @@
     $stmtC->execute();
     $clients = $stmtC->fetchAll(PDO::FETCH_OBJ);
 
-    $stmtT = $connexion->prepare("SELECT u.id, u.prenom, u.nom, u.permis, t.client, t.next_date, t.nom as tt FROM user as u LEFT JOIN tournees AS t ON (u.tournees=t.id)");
+    $stmtT = $connexion->prepare("SELECT u.id, u.prenom, u.nom, u.permis, t.client, t.next_date, t.nom as tt FROM user as u LEFT JOIN rounds AS t ON (u.tournees=t.id)");
     $stmtT->execute();
     $userJ = $stmtT->fetchAll(PDO::FETCH_OBJ);
     ?>
@@ -85,7 +79,7 @@ if(isset($_POST['attribuer'])){
     $stmt->bindParam(1, $_POST['tournees']);
     $stmt->bindParam(2, $_POST['user']);
     $stmt->execute();
-    $stmtD = $connexion->prepare("UPDATE tournees SET next_date = ? WHERE id = ?");
+    $stmtD = $connexion->prepare("UPDATE rounds SET next_date = ? WHERE id = ?");
     $stmtD->bindParam(1, $_POST['date']);
     $stmtD->bindParam(2, $_POST['tournees']);
     $stmtD->execute();

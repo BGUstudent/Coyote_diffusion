@@ -1,4 +1,5 @@
-<?php include_once 'Database.php'; ?>
+<?php include_once 'Database.php';
+include 'header_admin.php';?>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -8,9 +9,6 @@
     <title>Ajout tournées</title>
 </head>
 <body>
-    <!-- header -->
-    <?php include 'header_admin.php';?>
-    <br>
     <div class="container">
 
     <?php
@@ -42,7 +40,7 @@
     if(isset($_POST['submit'])){ 
         $database = new Database();
         $connexion = $database->getConnection();
-        $stmt = $connexion->prepare("INSERT INTO tournees(nom, client, equipe) VALUES (?, ?, ?) ");
+        $stmt = $connexion->prepare("INSERT INTO rounds(nom, client, equipe) VALUES (?, ?, ?) ");
         $stmt->bindParam(1, $_POST['nom']);
         $stmt->bindParam(2, $_POST['client']);
         $stmt->bindParam(3, $_POST['equipe']);
