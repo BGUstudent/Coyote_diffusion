@@ -23,20 +23,29 @@ include 'header_admin.php';?>
         $stmt->execute();
         $tournees = $stmt->fetchAll(PDO::FETCH_OBJ);
         foreach($tournees as $row){
-            echo '<option value="'.$row->id.'">'.$row->nom.'</option>';
+            if(isset($_POST['tournee_info']) && ($_POST['tournee_info']===$row->id)){
+                echo '<option value="'.$row->id.'" selected>'.$row->nom.'</option>';
+            }else{
+                echo '<option value="'.$row->id.'">'.$row->nom.'</option>';
+            }
         }
         ?>
         </select>
-        <input class="btn btn-primary" type="submit" value="valider" name="submitT"></input>
+        <input class="btn btn-primary" type="submit" value="valider" name="submitT" id="submitT"></input>
     </form>
     <br>
     <?php
+    if(isset($_POST['tournee_info'])){
+        echo '<script>document.getElementById("submitT").click(); </script>';
+    }
+    
     if(isset($_POST['submitT'])){ 
         $stmtA = $connexion->prepare("SELECT nom FROM rounds WHERE id=?");
         $stmtA->bindValue(1, $_POST['tournees'], PDO::PARAM_STR);
         $stmtA->execute(); 
         $nom_tournee = $stmtA->fetch(PDO::FETCH_OBJ);   
     ?>
+    
     <button class='btn btn-link' onclick='expand()'>Ajouter un point de livraison à la tournée <?php echo $nom_tournee->nom ?></button>
     <div id="hide" style='display:none'>
     <!-- formulaire d'ajout -->
@@ -107,14 +116,14 @@ include 'header_admin.php';?>
             </div>';
         }
         echo'</ul>';
-}
+    }
     ?>
     </div>
         
 <script>
 // Drag and drop, sort, send new postition to DB
 $(document).ready(function () {
-    $('ul').sortable({
+    $('#points').sortable({
         axis: 'y',
         //Jaune quand drag
         sort: function( event, ui ) {

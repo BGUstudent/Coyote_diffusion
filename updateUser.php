@@ -1,4 +1,5 @@
-<?php include_once 'Database.php'; ?>
+<?php include_once 'Database.php';
+include 'header_admin.php';?>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -8,11 +9,7 @@
     <title>Update user</title>
 </head>
 <body>
-    <!-- header -->
-    <?php include 'header_admin.php';?>
-    <br>
-    <div class="container">
-<body>
+<div class="container">
 <?php
     $database = new Database();
     $connexion = $database->getConnection();

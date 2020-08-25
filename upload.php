@@ -13,10 +13,11 @@
 <?php
 $tournee = $_POST['tournee_id'];
 echo 'Tournée n°'.$tournee.'<br>';
+  //où va le fichier?
   // chemin serveur :
-  // $target_dir = "/home/postfutur/www/corpscan/uploads/"; //où va le fichier?
+  $target_dir = "/home/alexchauvet/coyote.alexchauvet.com/uploads/"; 
   // chemin local : 
-  $target_dir = "/var/www/html/Ben/uploads/"; //où va le fichier?
+  // $target_dir = "/var/www/html/Ben/uploads/"; 
 
   $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]); //définir son nom complet (avec chemin d'accès)
   // Check if file already exists
@@ -49,7 +50,8 @@ echo 'Tournée n°'.$tournee.'<br>';
   {
     $stmt->execute($CSVrow);
   }
-    echo "<br> points de livraison ajoutés";
+    echo '<br> points de livraison ajoutés<br>
+    <a href="tournees.php">Retour</a>';
 ?>
 
 </body>

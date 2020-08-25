@@ -17,6 +17,10 @@ include 'header_admin.php';?>
     $stmt = $connexion->prepare("SELECT * FROM clients");
     $stmt->execute(); 
     $clients = $stmt->fetchAll(PDO::FETCH_OBJ);   
+
+    $stmtR = $connexion->prepare("SELECT * FROM rounds");
+    $stmtR->execute(); 
+    $rounds = $stmtR->fetchAll(PDO::FETCH_OBJ);   
     ?>
 
     <!-- formulaire d'ajout -->
@@ -38,8 +42,6 @@ include 'header_admin.php';?>
     </form>
     <?php
     if(isset($_POST['submit'])){ 
-        $database = new Database();
-        $connexion = $database->getConnection();
         $stmt = $connexion->prepare("INSERT INTO rounds(nom, client, equipe) VALUES (?, ?, ?) ");
         $stmt->bindParam(1, $_POST['nom']);
         $stmt->bindParam(2, $_POST['client']);
@@ -48,6 +50,29 @@ include 'header_admin.php';?>
         echo "La tournée " .$_POST['nom']. " a été ajoutée";
     }
     ?>
+    
+    <br><br><h4>Supprimer une tournée</h4>    <br>
+
+    <?php
+    foreach($rounds as $round){
+        echo '
+        <b>'.$round->client.' -> '.$round->nom. '</b> ('.$round->equipe.')   
+        <div class="form-inline"><form class="form-inline mr-4" action="updateRound.php" method="POST">
+            <input type="hidden" name="id" value="'.$round->id.'">
+            <input class="btn btn-primary btn-sm" type="submit" name="submitU'.$round->id.'" value="Modifier">
+        </form>
+        <form class="form-inline" action="add_tournee.php" method="POST" onSubmit="return confirm(\'Supprimer cette tournée ?\')">
+            <input type="hidden" name="id'.$round->id.'" value="'.$round->id.'">
+            <input class="btn btn-danger btn-sm ml-3" type="submit" name="submitD'.$round->id.'" value="Supprimer">
+        </form></div><br>';
+    }
+    if(isset($_POST['submitD'.$round->id])){ 
+        $stmtD = $connexion->prepare("DELETE FROM rounds WHERE id={$_POST['id'.$round->id]}");
+        $stmtD->execute();
+        echo("<script>location.href = 'add_tournee.php';</script>");
+    }
+    ?>
+
     </div>
 </body>
 </html>

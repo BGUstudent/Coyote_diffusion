@@ -3,6 +3,7 @@ include_once 'Database.php';
 
 $database = new Database();
 $connexion = $database->getConnection();
+
 // Si c'est un user alors nom devient mdp
 
 

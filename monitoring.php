@@ -44,27 +44,38 @@ include 'header_admin.php';?>
     </form><br>
 
     <div id='doneBy'></div>
+    <div id='details'></div>
+
     <div class='' id='monitoring' style="max-width: 600px;"><b>Veuillez selectionner une tournée à surveiller</b></div>
         <br>
     <div id="buttonsToHide" style='display:none'>
-        <!-- créer le PDF de reporting -->
+    <!-- créer le PDF et excel de reporting -->
         <div class="pdf">
             <form method="post" action="pdf.php">
                 <input type="hidden" name="users" id="users" value="">
                 <input type="hidden" name="users2" id="users2" value="">
                 <input type="hidden" name="tournee" id="tournee" value="">
-                <input type="submit" class="btn btn-success" name="pdf" value="Editer PDF et Excel" action="pdf.php" id="pdf">
+                <input type="submit" style="width:200px;" class="btn btn-success" name="pdf" value="Editer PDF/Excel" action="pdf.php" id="pdf">
             </form>
         </div>
         <br>
 
-        <!-- Reset -->
+    <!-- Maj des points -->
+        <div>
+            <form method="post" action="tournees.php">
+                <input type="hidden" name="tournee_info" id="tournee_info" value="">
+                <input type="submit" style="width:200px;" class="btn btn-info" name="reset" value="MàJ de la tournée" action="tournees.php" id="maj">
+            </form>
+        </div>
+        <br>
+
+    <!-- Reset -->
         <div>
             <form method="post" action="reset.php" onSubmit="return confirm('Réinitialiser la tournée?')">
                 <input type="hidden" name="user_info" id="user_info" value="">
                 <input type="hidden" name="user2_info" id="user2_info" value="">
-                <input type="hidden" name="tournee_info" id="tournee_info" value="">
-                <input type="submit" class="btn btn-warning" name="reset" value="Cloturer la tournée" action="reset.php" id="reset">
+                <input type="hidden" name="tournee_infoR" id="tournee_infoR" value="">
+                <input type="submit" style="width:200px;" class="btn btn-warning" name="reset" value="Cloturer la tournée" action="reset.php" id="reset">
             </form>
         </div>
     </div>
@@ -97,6 +108,7 @@ include 'header_admin.php';?>
         document.getElementById("buttonsToHide").style.display = "block"; 
         document.getElementById("tournee").value = that;//change 'tournee' value
         document.getElementById("tournee_info").value = that;//change 'tournee_info' value
+        document.getElementById("tournee_infoR").value = that;//change 'tournee_infoR' value
         document.getElementById("doneBy").innerHTML=''
 
         document.getElementById("monitoring").innerHTML=""
@@ -111,7 +123,13 @@ include 'header_admin.php';?>
         .then(function(data){
             document.getElementById("monitoring").innerHTML+=
             `<ul class="list-group">`
+            var countEx=0
+            var countP=0
+            var countD=0
             data.forEach(function(item){
+                countP++
+                countEx+=parseInt(item.exemplaires)
+                countD+=parseInt(item.distribués)
                 if(item.motif=="livré"){ //Si livré
                     document.getElementById("monitoring").innerHTML+=`
                         <li class="list-group-item" style='background-color: #abfaba;'>
@@ -142,7 +160,14 @@ include 'header_admin.php';?>
             //transmettre l'id de la (des) personne(s) affectée(s) à la tournée
             document.getElementById("users").value=JSON.stringify(data[0].users[0].id).replace(/\"/g, "")
             document.getElementById("user_info").value=JSON.stringify(data[0].users[0].id).replace(/\"/g, "")
-
+            //détails de la tournée
+            document.getElementById("details").innerHTML='<h5>Nombre de points à livrer : '
+            + countP
+            +'<br>Nombre total d\'exemplaires à livrer : '
+            + countEx 
+            +'<br>Nombre total d\'exemplaires distribués : '
+            + countD 
+            +'</h5>';
             //Effectué par...
             document.getElementById("doneBy").innerHTML='<h4>Effectué par '
             +JSON.stringify(data[0].users[0].prenom).replace(/\"/g, "")

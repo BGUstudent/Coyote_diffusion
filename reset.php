@@ -16,7 +16,7 @@ if($_SESSION['user']->accreditation!=2){
 <?php
 
 //On recupere les données de la tournée affectée à cet utlisateur
-$tournee = $_POST['tournee_info'];
+$tournee = $_POST['tournee_infoR'];
 
 $database = new Database();
 $connexion = $database->getConnection();   

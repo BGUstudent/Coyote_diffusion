@@ -32,11 +32,7 @@
 <div class="container">
 
     <?php
-    echo "<h2>Bienvenue "; echo $_SESSION['user']->prenom;
-    if($_SESSION['user']->accreditation == 1){
-        echo '<br><a href="logout.php" class="float-right btn btn-info"><i class="fas fa-sign-out-alt"></i> Se déconnecter</a>';
-    }
-    echo "</h2><br>Voici les points à livrer :<br><br>";
+
     //On recupere les infos de l'utilisateur
     $id = $_SESSION['user']->id;
     $database = new Database();
@@ -46,13 +42,34 @@
     $stmt->execute();
     $user = $stmt->fetch(PDO::FETCH_OBJ);
 
+    //On récupère les détails de la tournée
+    $stmt = $connexion->prepare("SELECT * FROM rounds WHERE id=?");
+    $stmt->bindParam(1, $user->tournees); 
+    $stmt->execute(); 
+    $round = $stmt->fetch(PDO::FETCH_OBJ);   
+
     //On affiche les points de distributions attribués
     $stmt = $connexion->prepare("SELECT * FROM points WHERE tournees=:tournees AND exemplaires > 0 ORDER BY ordre ASC");
     $stmt->bindParam(':tournees', $user->tournees);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_OBJ);
 
-    echo '<ul class="list-group">'; //Start list
+    echo "<h2>Bienvenue "; echo $_SESSION['user']->prenom;
+    if($_SESSION['user']->accreditation == 1){
+        echo '<br><a href="logout.php" class="float-right btn btn-info"><i class="fas fa-sign-out-alt"></i> Se déconnecter</a>';
+    }
+    echo '</h2>
+    <div class="card" style="width: 18rem;">
+    <div class="card-header"><b>Détails de la tournée</b></div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Client : '.$round->client.'</li>
+            <li class="list-group-item">Tournée : '.$round->nom.'</li>
+            <li class="list-group-item">Nombre de point à distribuer : '.count($result).'</li>
+            <li class="list-group-item">Nombre total d\'exemplaires : '.array_sum(array_column($result, 'exemplaires')).'</li>
+        </ul>
+    </div>
+    <br>Voici les points à livrer :<br><br>
+    <ul class="list-group">'; //Start list
     foreach( $result as $row ) {
         echo "<li class='list-group-item' id='li".$row->id."' ".(($row->last_update)?'style="background-color: #abfaba;"':"")//green if done
         ."><button class='btn btn-light btn-sm float-right' onclick='copy(".$row->id.")'>Copier l'adresse</button><span id='point".$row->id."'><b>"

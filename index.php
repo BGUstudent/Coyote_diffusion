@@ -74,10 +74,11 @@
 
 /* Function sanitize */
 	function sanitize($input){
-		$input = strip_tags(stripcslashes(htmlentities(trim($input))));
+		$input = strip_tags(stripcslashes(htmlentities(htmlspecialchars(trim($input)))));
 		$input = str_replace("'","",$input);
 		return $input;
 	}
 ?>
+
 </body>
 </html>

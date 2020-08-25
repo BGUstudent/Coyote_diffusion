@@ -59,7 +59,7 @@
                     Gérer les tournées</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="tournees.php">Modifier les points de distributions</a>
-                        <a class="dropdown-item" href="add_tournee.php">Ajouter une tournée</a>
+                        <a class="dropdown-item" href="add_tournee.php">Ajouter/Modifier/Supprimer une tournée</a>
                     </div>
                 </li>
                 <li class="nav-item">
