@@ -35,12 +35,12 @@
             }
             ?>
         </select>
-        <div id="showUsers">
             <form method="POST" action=''>
                 <select class="custom-select custom-select mb-1" name="tournees" id="tournees-select" onchange="showUsers(this)">
                     <option value="" data-equipe="">puis une tournée</option>
                 </select>
-                Date de la tournée : <input type="date" id="date" name="date">
+                <label class="pt-2 pl-2"for="date">Date de la tournée :</label>
+                <input class="float-right" type="date" id="date" name="date">
                 <select class="custom-select custom-select mb-1" name="user" id="user-select">
                     <option value="">Attribuer un livreur</option>
                     <?php
@@ -59,17 +59,18 @@
                 </select>
                 <input type="submit" class="btn btn-primary float-right" name="attribuer" value="Attribuer la tournée">
             </form>
-        </div>
     </div>
     <div>
     <br><br><br><h4>Tournées déjà attribuées</h4>
+    <ul>
         <?php
             foreach($userJ as $user){
                 if($user->tt){
-                    echo 'le '. date("l d F", strtotime($user->next_date)) .' : '.$user->client.' - tournée '.$user->tt.' attribué à '.$user->prenom.' '.$user->nom.'<br>';
+                    echo '<li>le '. date("l d F", strtotime($user->next_date)) .' : '.$user->client.' - tournée '.$user->tt.' attribué à '.$user->prenom.' '.$user->nom.'</li><br>';
                 }
             }
         ?>
+    </ul>
     </div>    
 </div>
 <?php

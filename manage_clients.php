@@ -31,7 +31,7 @@ include 'header_admin.php';?>
     <!-- formulaire d'ajout -->
     <br>Ajouter un client<br>
     <form method="post" action="add_client.php">
-        <input type="text" id="nom_client" name="nom_client" placeholder="Nom du client">
+        <input type="text" id="nom_client" name="nom_client" placeholder="Nom du client" required>
         <input type="submit" class="btn btn-primary" name="add_client" value="Ajouter">
     </form>
     </div>

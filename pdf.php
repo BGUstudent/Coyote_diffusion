@@ -1,3 +1,9 @@
+<?php include 'header_admin.php';
+ include_once 'Database.php'; 
+ require('Classes/PHPExcel.php');
+ // require('fpdf/fpdf.php');
+?>
+
 <head>
     <title>pdf</title>
     <meta charset="UTF-8">
@@ -7,15 +13,6 @@
 </head>
 
 <?php
-//Extensions nécessaires
-require('fpdf/fpdf.php');
-require('Classes/PHPExcel.php');
-include_once 'Database.php'; 
-
-session_start();
-if($_SESSION['user']->accreditation!=2){
-    header("Location:index.php");
-};
 
 //On recupere les données de la tournée affectée à cet utlisateur
 $tournee = $_POST['tournee'];
@@ -46,42 +43,43 @@ if(isset($_POST['users2'])){
     $user2_info = $stmtU2->fetch(PDO::FETCH_OBJ);
 }
 
-//Rapport PDF
-$pdf = new FPDF();
-$pdf->AddPage();
-$pdf->SetFont('Arial','B',16);
-// En-tete
-$pdf->Cell(40,10, 'Reporting de distribution : ');
-$pdf->Ln();
-$pdf->Cell(40,10, 'Effectue le '.date('d-m-Y'));
-$pdf->Ln();
-$pdf->Cell(40,10, 'par '.$user_info->prenom.' '.$user_info->nom);
-if($user2_info){
-    $pdf->Cell(40,10, ' et '.$user2_info->prenom.' '.$user2_info->nom);
-}
-$pdf->Ln();
+// //Rapport PDF
 
-// loop
-$pdf->SetFont('Arial','',12);
-foreach( $result as $row ) {
-    $pdf->Cell(40,10,utf8_decode($row->nom . ", "
-    . $row->adresse . " " 
-    . $row->code_postal . " " 
-    . $row->ville));
-    $pdf->Ln();
-    $pdf->Cell(40,10, utf8_decode("nombre d'exemplaire distribués : ".$row->distribués."   (prévu : ".$row->exemplaires.")"));
-    $pdf->Ln();
-    $pdf->Ln();
-}
+// $pdf = new FPDF();
+// $pdf->AddPage();
+// $pdf->SetFont('Arial','B',16);
+// // En-tete
+// $pdf->Cell(40,10, 'Reporting de distribution : ');
+// $pdf->Ln();
+// $pdf->Cell(40,10, 'Effectue le '.date('d-m-Y'));
+// $pdf->Ln();
+// $pdf->Cell(40,10, 'par '.$user_info->prenom.' '.$user_info->nom);
+// if($user2_info){
+//     $pdf->Cell(40,10, ' et '.$user2_info->prenom.' '.$user2_info->nom);
+// }
+// $pdf->Ln();
 
-//Output
-if($user2_info){
-    $pdf->Output('F', 'rapports/'.$result2->next_date.' '.$result2->client.', '.$result2->nom.' - '.$user_info->prenom.' '.$user_info->nom.' et '.$user2_info->prenom.' '.$user2_info->nom.' '.date('d-m-Y').'.pdf', true);
-}else{
-    $pdf->Output('F', 'rapports/'.$result2->next_date.' '.$result2->client.', '.$result2->nom.' - '.$user_info->prenom.' '.$user_info->nom.' '.date('d-m-Y').'.pdf', true);
-}
+// // loop
+// $pdf->SetFont('Arial','',12);
+// foreach( $result as $row ) {
+//     $pdf->Cell(40,10,utf8_decode($row->nom . ", "
+//     . $row->adresse . " " 
+//     . $row->code_postal . " " 
+//     . $row->ville));
+//     $pdf->Ln();
+//     $pdf->Cell(40,10, utf8_decode("nombre d'exemplaire distribués : ".$row->distribués."   (prévu : ".$row->exemplaires.")"));
+//     $pdf->Ln();
+//     $pdf->Ln();
+// }
 
-echo "Le rapport PDF a été envoyé";
+// //Output
+// if($user2_info){
+//     $pdf->Output('F', 'rapports/'.$result2->next_date.' '.$result2->client.', '.$result2->nom.' - '.$user_info->prenom.' '.$user_info->nom.' et '.$user2_info->prenom.' '.$user2_info->nom.' '.date('d-m-Y').'.pdf', true);
+// }else{
+//     $pdf->Output('F', 'rapports/'.$result2->next_date.' '.$result2->client.', '.$result2->nom.' - '.$user_info->prenom.' '.$user_info->nom.' '.date('d-m-Y').'.pdf', true);
+// }
+
+// echo "Le rapport PDF a été envoyé";
 
 //Rapport Excel
 $objPHPExcel = new PHPExcel();

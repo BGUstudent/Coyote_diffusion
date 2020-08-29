@@ -17,9 +17,9 @@ $data = json_decode(file_get_contents("php://input"));
     $stmt = $connexion->prepare("UPDATE points SET last_update=?, heure=?, distribués=?, motif=?, commentaires=? WHERE id=?");
     $stmt->bindParam(1, $laDate);
     $stmt->bindParam(2, $heure);
-    $stmt->bindParam(3, $data->distribués);
+
     $stmt->bindParam(4, $data->motif);
-    $stmt->bindParam(5, $data->commentaires);
+    $stmt->bindParam(5, strip_tags(stripcslashes(htmlentities(htmlspecialchars(trim($data->commentaires)))))); //Sanitize input
     $stmt->bindParam(6, $data->id);
     if($stmt->execute()) {
         http_response_code(200);

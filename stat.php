@@ -76,7 +76,9 @@ if(isset($_POST['submit'])){
         }
     }
     if($parenthese){
-        $addSQL.=")";
+        $addSQL.=") GROUP BY nom, adresse";
+    }else{
+        $addSQL.=" GROUP BY nom, adresse";
     }
 
     $database = new Database();

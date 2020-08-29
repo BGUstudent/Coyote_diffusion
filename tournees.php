@@ -50,26 +50,26 @@ include 'header_admin.php';?>
     <div id="hide" style='display:none'>
     <!-- formulaire d'ajout -->
         <form method="post" action="add.php">
-            <input type="text" id="nomP" name="nomP" placeholder="Nom du point" required>
-            <input type="text" id="adresseP" name="adresseP" placeholder="Adresse" required>
-            <input type="text" id="codePostal" name="codePostal" placeholder="Code postal" required>
-            <input type="text" id="villeP" name="villeP" placeholder="Ville" required>
+            <input type="text" id="nomP" name="nomP" placeholder="Nom du point" style="max-width:220px;" required>
+            <input type="text" id="adresseP" name="adresseP" placeholder="Adresse" style="max-width:220px;" required>
+            <input type="text" id="codePostal" name="codePostal" placeholder="Code postal" style="max-width:220px;" required>
+            <input type="text" id="villeP" name="villeP" placeholder="Ville" style="max-width:220px;" required>
             <input type="hidden" name="tournee_id" value="<?php echo $_POST['tournees'] ?>">
-            <input type="text" id="infos" name="infos" placeholder="infos">
-            <input type="text" id="exemplaires" name="exemplaires" placeholder="nb de exemplaires" required>
-            <input type="text" id="categorie" name="categorie" placeholder="catégorie" required>
-            <input type="submit" name="ajouter" value="Ajouter">
+            <input type="text" id="infos" name="infos" placeholder="infos" style="max-width:220px;">
+            <input type="text" id="exemplaires" name="exemplaires" placeholder="nb de exemplaires" style="max-width:220px;" required>
+            <input type="text" id="categorie" name="categorie" placeholder="catégorie" style="max-width:220px;" required>
+            <input type="submit" class="btn btn-primary" name="ajouter" value="Ajouter">
         </form>
         <br>
 
     <!-- formulaire injection CSV --> 
-        Importer un fichier .csv:
+        Importer un fichier .csv: (ordre, categorie, infos, nom, adresse, code_postal, ville, exemplaires)
         <form method="post" action="upload.php" enctype="multipart/form-data">
             <label for="file">Selection le fichier .csv à importer</label>
             <!-- <input type="hidden" name="MAX_FILE_SIZE" value="30000" /> -->
             <input type="file" id="file" name="fileToUpload" accept=".csv">
             <input type="hidden" name="tournee_id" value="<?php echo $_POST['tournees'] ?>">
-            <input type="submit" name='submit'></input>
+            <input type="submit" name='submit' class="btn btn-primary" value="Importer"></input>
         </form>
     </div>
     <br>
@@ -98,13 +98,13 @@ include 'header_admin.php';?>
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-grip-horizontal" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path d="M7 2a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM7 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM7 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-3 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-3 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
                 </svg>
-                <input class="form-control mr-sm-1" type="text" id="nom'.$x->id.'" name="nom" value="'.$x->nom.'">
-                <input class="form-control mr-sm-1" type="text" id="adresse'.$x->id.'" name="adresse" value="'.$x->adresse.'">
-                <input class="form-control mr-sm-1" type="text" id="codePostal'.$x->id.'" name="codePostal" value="'.$x->code_postal.'">
-                <input class="form-control mr-sm-1" type="text" id="ville'.$x->id.'" name="ville" value="'.$x->ville.'">
-                <input class="form-control mr-sm-1" type="text" placeholder="infos" id="infos'.$x->id.'" name="infos" value="'.$x->infos.'">
-                <input class="form-control mr-sm-1" style="max-width:60px;" type="text" id="exemplaires'.$x->id.'" name="exemplaires" value="'.$x->exemplaires.'">
-                <input class="form-control mr-sm-1" type="text" id="categorie'.$x->id.'" name="categorie" value="'.$x->categorie.'">
+                <input class="form-control mr-sm-1" type="text" style="max-width:220px;" id="nom'.$x->id.'" name="nom" value="'.$x->nom.'">
+                <input class="form-control mr-sm-1" type="text" style="max-width:220px;" id="adresse'.$x->id.'" name="adresse" value="'.$x->adresse.'">
+                <input class="form-control mr-sm-1" type="text" style="max-width:220px;" id="codePostal'.$x->id.'" name="codePostal" value="'.$x->code_postal.'">
+                <input class="form-control mr-sm-1" type="text" style="max-width:220px;" id="ville'.$x->id.'" name="ville" value="'.$x->ville.'">
+                <input class="form-control mr-sm-1" type="text" style="max-width:220px;" placeholder="infos" id="infos'.$x->id.'" name="infos" value="'.$x->infos.'">
+                <input class="form-control mr-sm-1" style="max-width:50px;" type="text" id="exemplaires'.$x->id.'" name="exemplaires" value="'.$x->exemplaires.'">
+                <input class="form-control mr-sm-1" type="text" style="max-width:220px;" id="categorie'.$x->id.'" name="categorie" value="'.$x->categorie.'">
                 <input type="hidden" id="id'.$x->id.'" name="id" value="'.$x->id.'">
             
                 <button class="btn btn-primary mr-2 btn-sm" onclick="updateOne('.$x->id.')" style="width:100px">Modifier</button>
