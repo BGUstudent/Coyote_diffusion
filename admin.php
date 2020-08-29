@@ -26,42 +26,55 @@
     $stmtT->execute();
     $userJ = $stmtT->fetchAll(PDO::FETCH_OBJ);
     ?>
-    <div class="form" style="max-width: 310px;">
-        <select class="custom-select custom-select mb-1" name="clients" id="clients-select" onchange="changeTournees(this.value)">
-            <option value="">Selectionnez un client</option>';
-            <?php
-            foreach($clients as $client){ //Choix du client
-                echo'<option value="'.$client->nom_client.'">'.$client->nom_client.'</option>';
-            }
-            ?>
-        </select>
-            <form method="POST" action=''>
-                <select class="custom-select custom-select mb-1" name="tournees" id="tournees-select" onchange="showUsers(this)">
-                    <option value="" data-equipe="">puis une tournée</option>
-                </select>
-                <label class="pt-2 pl-2"for="date">Date de la tournée :</label>
-                <input class="float-right" type="date" id="date" name="date">
-                <select class="custom-select custom-select mb-1" name="user" id="user-select">
-                    <option value="">Attribuer un livreur</option>
-                    <?php
-                    foreach($users as $user){
-                        echo'<option value="'.$user->id.'">'.$user->prenom.' '.$user->nom.' - Permis : '.$user->permis.'</option>';
-                    }
-                    ?>
-                </select>
-                <select class="custom-select custom-select mb-1" name="user2" style='display:none' id="user2-select">
-                    <option value="">Attribuer un 2ème livreur</option>
-                    <?php
-                    foreach($users as $user){
-                        echo'<option value="'.$user->id.'">'.$user->prenom.' '.$user->nom.' - Permis : '.$user->permis.'</option>';
-                    }
-                    ?>
-                </select>
-                <input type="submit" class="btn btn-primary float-right" name="attribuer" value="Attribuer la tournée">
-            </form>
+    <form method="POST" action=''>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <select class="custom-select mb-1" name="clients" id="clients-select" onchange="changeTournees(this.value)">
+                <option value="">Selectionnez un client</option>';
+                <?php
+                foreach($clients as $client){ //Choix du client
+                    echo'<option value="'.$client->nom_client.'">'.$client->nom_client.'</option>';
+                }
+                ?>
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+            <select class="custom-select  mb-1" name="tournees" id="tournees-select" onchange="showUsers(this)">
+                <option value="" data-equipe="">puis une tournée</option>
+            </select>
+        </div>
     </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <select class="custom-select mb-1" name="user" id="user-select">
+                <option value="">Attribuer un livreur</option>
+                <?php
+                foreach($users as $user){
+                    echo'<option value="'.$user->id.'">'.$user->prenom.' '.$user->nom.' - Permis : '.$user->permis.'</option>';
+                }
+                ?>
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+            <select class="custom-select mb-1" name="user2" style='display:none' id="user2-select">
+                <option value="">Attribuer un 2ème livreur</option>
+                <?php
+                foreach($users as $user){
+                    echo'<option value="'.$user->id.'">'.$user->prenom.' '.$user->nom.' - Permis : '.$user->permis.'</option>';
+                }
+                ?>
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+            <label class="pt-2 pl-2"for="date">Date de la tournée </label>
+            <input type="date" id="date" name="date">
+        </div>
+    </div>
+        <input type="submit" class="btn btn-primary" name="attribuer" value="Attribuer la tournée">
+    </form>
+
     <div>
-    <br><br><br><h4>Tournées déjà attribuées</h4>
+    <br><br><h4 class="mb-3">Tournées déjà attribuées</h4>
     <ul>
         <?php
             foreach($userJ as $user){
@@ -72,6 +85,7 @@
         ?>
     </ul>
     </div>    
+
 </div>
 <?php
 // fonction pour attribuer la tournée en BDD
