@@ -15,9 +15,9 @@
     <title>login</title>
 </head>
 <body>
-	<img src="img/COYOTE_LOGO_315.png" style="max-width: 310px;" class="img-fluid rounded mx-auto d-block" alt="logo_coyote">
+	<img src="img/COYOTE_LOGO_315.png" style="max-width: 310px;" class="img-fluid rounded mx-auto d-block mt-3" alt="logo_coyote">
     <!-- Login Form -->
-	<div class="form mx-auto mt-5" style="width: 310px;">
+	<div class="form mx-auto mt-4" style="width: 310px;">
 		<form method="post" action="index.php">
 			<fieldset>
 				<legend style="font-weight:bold">Login</legend>
