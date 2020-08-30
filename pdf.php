@@ -9,7 +9,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta http-equiv="refresh" content="5;URL=monitoring.php" />
+    <!-- <meta http-equiv="refresh" content="3;URL=monitoring.php" /> -->
 </head>
 
 <?php
@@ -131,7 +131,8 @@ $objPHPExcel->getActiveSheet()->setTitle('Rapport');
 // Save Excel 2007 file
 define('EOL',(PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
 
-echo date('H:i:s') , " Write to Excel2007 format" , EOL;
+// echo date('H:i:s') , " Write to Excel2007 format" , EOL;
+
 $callStartTime = microtime(true);
 
 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
@@ -145,6 +146,9 @@ if($user2_info){
 $callEndTime = microtime(true);
 $callTime = $callEndTime - $callStartTime;
 
-echo date('H:i:s') , ' File written to rapports/tournée'.$result2->next_date.' '.$result2->client.' - '.$result2->nom.', '.$user_info->prenom.' '.$user_info->nom.' '.date('d-m-Y').'.xlsx';
+// echo date('H:i:s') , ' File written to rapports/tournée'.$result2->next_date.' '.$result2->client.' - '.$result2->nom.', '.$user_info->prenom.' '.$user_info->nom.' '.date('d-m-Y').'.xlsx';
 
+echo '<br><div class="text-center"><h2 class="mt-5">Le fichier Excel a été généré</h2>
+<br><a class="text-center mt-5" href="read_reporting.php">Cliquez ici pour le consulter</a><br>
+<br><a class="text-center mt-5" href="monitoring.php">Ou ici pour retourner au monitoring</a></div>';
 ?>

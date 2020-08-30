@@ -1,18 +1,15 @@
-<?php include_once 'Database.php'; ?>
+<?php include_once 'Database.php';
 
-<head>
-	<meta http-equiv="refresh" content="3;URL=manage_users.php"/>
-</head>
+if (!isset($_SESSION)){
+	session_start();
+};
+if($_SESSION['user']->accreditation!=2){
+	header("Location:index.php");
+};
 
-<body>
-    
-<?php
 $database = new Database();
 $connexion = $database->getConnection();
 $stmt = $connexion->prepare("DELETE FROM user WHERE id={$_POST['id']}");
 $stmt->execute();
-echo "L'utilisateur a été supprimé";
+header("Location:manage_users.php");
 ?>
-
-</body>
-

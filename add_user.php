@@ -1,11 +1,12 @@
-<?php include_once 'Database.php'; ?>
+<?php include_once 'Database.php'; 
 
-<head>
-	<meta http-equiv="refresh" content="3;URL=manage_users.php"/>
-</head>
+if (!isset($_SESSION)){
+	session_start();
+};
+if($_SESSION['user']->accreditation!=2){
+	header("Location:index.php");
+};
 
-<body>
-<?php
 $database = new Database();
 $connexion = $database->getConnection();
 $stmt = $connexion->prepare("INSERT INTO user(prenom, nom, numero, password, accreditation, permis) VALUES (?, ?, ?, ?, ?, ?) ");
@@ -16,6 +17,6 @@ $stmt->bindParam(4, $_POST['nom']);
 $stmt->bindParam(5, $_POST['accred']);
 $stmt->bindParam(6, $_POST['permis']);
 $stmt->execute();
-echo $_POST['prenom'].' '.$_POST['nom'].' a été ajouté';
+header("Location:manage_users.php");
 ?>
 </body>

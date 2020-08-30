@@ -95,7 +95,7 @@ include 'header_admin.php';?>
                     echo'<div style="max-width:1404px;" class="bg-info">Commentaire du livreur : '.$x->commentaires.'</div>';
                 }
                 echo '<li id="li'.$x->id.'" class="form-inline mb-4" method="post" action="">
-                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-grip-horizontal" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <svg class="grab" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-grip-horizontal" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path d="M7 2a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM7 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM7 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-3 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-3 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
                 </svg>
                 <input class="form-control mr-sm-1" type="text" style="max-width:220px;" id="nom'.$x->id.'" name="nom" value="'.$x->nom.'">

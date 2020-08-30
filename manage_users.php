@@ -12,7 +12,7 @@ include 'header_admin.php';?>
 
     <div class="container">
 
-    <h4>Liste des utilisateurs enregistrés</h4><br>
+    <h4>Liste des utilisateurs enregistrés</h4>
     <?php
     $database = new Database();
     $connexion = $database->getConnection();

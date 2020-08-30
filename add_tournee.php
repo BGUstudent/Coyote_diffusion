@@ -47,11 +47,11 @@ include 'header_admin.php';?>
         $stmt->bindParam(2, $_POST['client']);
         $stmt->bindParam(3, $_POST['equipe']);
         $stmt->execute();
-        echo "La tournée " .$_POST['nom']. " a été ajoutée";
+        echo("<script>location.href='add_tournee.php';</script>");
     }
     ?>
     
-    <br><br><h4>Supprimer une tournée</h4>    <br>
+    <br><h4>Supprimer une tournée</h4><br>
 
     <?php
     foreach($rounds as $round){
@@ -69,7 +69,7 @@ include 'header_admin.php';?>
     if(isset($_POST['submitD'.$round->id])){ 
         $stmtD = $connexion->prepare("DELETE FROM rounds WHERE id={$_POST['id'.$round->id]}");
         $stmtD->execute();
-        echo("<script>location.href = 'add_tournee.php';</script>");
+        echo("<script>location.href='add_tournee.php';</script>");
     }
     ?>
 

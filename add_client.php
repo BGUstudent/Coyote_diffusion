@@ -1,17 +1,16 @@
-<?php include_once 'Database.php'; ?>
+<?php include_once 'Database.php';
 
-<head>
-	<meta http-equiv="refresh" content="3;URL=manage_clients.php"/>
-</head>
+if (!isset($_SESSION)){
+	session_start();
+};
+if($_SESSION['user']->accreditation!=2){
+	header("Location:index.php");
+};
 
-<body>
-<?php
 $database = new Database();
 $connexion = $database->getConnection();
-$stmt = $connexion->prepare("INSERT INTO clients(nom_client) 
-VALUES (?) ");
+$stmt = $connexion->prepare("INSERT INTO clients(nom_client) VALUES (?) ");
 $stmt->bindParam(1, $_POST['nom_client']);
 $stmt->execute();
-echo $_POST['nom_client'].' a été ajouté';
+header("Location:manage_clients.php");
 ?>
-</body>

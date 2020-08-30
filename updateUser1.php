@@ -6,7 +6,6 @@ $connexion = $database->getConnection();
 
 // Si c'est un user alors nom devient mdp
 
-
 if(isset($_POST['submitOne'])){
     if(isset($_POST['numero'])){
         $stmt = $connexion->prepare("UPDATE user SET prenom=?, nom=?, numero=?, permis=?, password=? WHERE id=?");

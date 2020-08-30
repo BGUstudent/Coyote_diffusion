@@ -55,7 +55,7 @@ include 'header_admin.php';?>
                 <input type="hidden" name="users" id="users" value="">
                 <input type="hidden" name="users2" id="users2" value="">
                 <input type="hidden" name="tournee" id="tournee" value="">
-                <input type="submit" style="width:200px;" class="btn btn-success" name="pdf" value="Editer PDF/Excel" action="pdf.php" id="pdf">
+                <input type="submit" style="width:200px;" class="btn btn-success" name="pdf" value="Editer fichier Excel" action="pdf.php" id="pdf">
             </form>
         </div>
         <br>
@@ -163,9 +163,9 @@ include 'header_admin.php';?>
             //détails de la tournée
             document.getElementById("details").innerHTML='<h5>Nombre de points à livrer : '
             + countP
-            +'<br>Nombre total d\'exemplaires à livrer : '
+            +'<br>Nombre d\'exemplaires à livrer : '
             + countEx 
-            +'<br>Nombre total d\'exemplaires distribués : '
+            +'<br>Nombre d\'exemplaires distribués : '
             + countD 
             +'</h5>';
             //Effectué par...

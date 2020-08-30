@@ -38,6 +38,9 @@
             .back-to-top {
                 right: 20px;
             }
+            .grab{
+                display: none;
+            }
         }
     </style>
 </head>
