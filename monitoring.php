@@ -134,7 +134,9 @@ include 'header_admin.php';?>
                     document.getElementById("monitoring").innerHTML+=`
                         <li class="list-group-item" style='background-color: #abfaba;'>
                         <b>${JSON.stringify(item.nom).replace(/\"/g, "")}</b>,<br> 
-                         ${JSON.stringify(item.adresse).replace(/\"/g, "")}<br>
+                         ${JSON.stringify(item.adresse).replace(/\"/g, "")}, 
+                         ${JSON.stringify(item.code_postal).replace(/\"/g, "")} 
+                         ${JSON.stringify(item.ville).replace(/\"/g, "")}<br>
                          <b>${JSON.stringify(item.motif).replace(/\"/g, "")}</b>
                          à : ${JSON.stringify(item.heure).replace(/\"/g, "")}<br>
                          Prévu : ${JSON.stringify(item.exemplaires).replace(/\"/g, "")}
@@ -147,7 +149,8 @@ include 'header_admin.php';?>
                          <b>${JSON.stringify(item.motif).replace(/\"/g, "")}</b>, 
                          heure de passage : ${JSON.stringify(item.heure).replace(/\"/g, "")}<br>
                          Prévu : ${JSON.stringify(item.exemplaires).replace(/\"/g, "")}
-                         Distribués : ${JSON.stringify(item.distribués).replace(/\"/g, "")}</li>`
+                         Distribués : ${JSON.stringify(item.distribués).replace(/\"/g, "")}<br>
+                         Commentaire : <b>${JSON.stringify(item.commentaires).replace(/\"/g, "")}</b></li>`
                 }else{ //Si pas encore atteint
                     document.getElementById("monitoring").innerHTML+=`
                         <li class="list-group-item">

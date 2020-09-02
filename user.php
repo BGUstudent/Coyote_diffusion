@@ -15,7 +15,7 @@
         echo '<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://bootswatch.com/4/united/bootstrap.min.css" crossorigin="anonymous">
         <link rel="icon" type="img/logo_square.png" href="img/logo_square_30.png">';
     }
 ?>
@@ -26,7 +26,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>user sheet</title>
+    <title>Coyote distribution</title>
 </head>
 <body>
 <div class="container">
@@ -72,11 +72,18 @@
     <ul class="list-group">'; //Start list
     foreach( $result as $row ) {
         echo "<li class='list-group-item' id='li".$row->id."' ".(($row->last_update)?'style="background-color: #abfaba;"':"")//green if done
-        ."><button class='btn btn-light btn-sm float-right' onclick='copy(".$row->id.")'>Copier l'adresse</button><span id='point".$row->id."'><b>"
-        . $row->nom . "</b> <br>" 
+        ."><button class='btn btn-light btn-sm float-right' onclick='copy(".$row->id.")'>
+        <svg style='z-index:1;' width='1em' height='1em' viewBox='0 0 16 16' class='bi bi-clipboard' fill='currentColor' xmlns='http://www.w3.org/2000/svg'>
+            <path fill-rule='evenodd' d='M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z'/>
+            <path fill-rule='evenodd' d='M9.5 1h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z'/>
+        </svg>
+        </button>
+        <div class='float-right mr-1' id='copied".$row->id."' style='display:none; color:#e95420'><b>Copié!</b></div>
+        <span id='point".$row->id."'><b>"
+        . $row->nom . "</b><br> " 
         . $row->adresse . " " 
         . $row->code_postal . " " 
-        . $row->ville . " </span><br>" 
+        . $row->ville . " </span><br>(".$row->categorie.")<br>" 
         . $row->exemplaires. " exemplaires <button class='btn btn-primary float-right' data-toggle='modal' data-target='#exampleModal".$row->id."'>Terminé</button>";// onclick='message(".$row->exemplaires.",".$row->id.")'
         if ($row->infos != ""){
             echo "<div style='color:#ff5c11' id='infos".$row->id."'><b>".$row->infos."</b></div>";
@@ -130,6 +137,10 @@
         var element = document.getElementById("point"+i); //select the span
         var elementText = element.textContent; //get the text content from the span
         navigator.clipboard.writeText(elementText); //use the Clipboard API writeText method
+        $( "#copied"+i ).show(); 
+        setTimeout(function() {
+            $( "#copied"+i ).hide();
+            }, 2000);
     }
 
 //script pour faire apparaitre l'input nombre d'exemplaire

@@ -6,7 +6,7 @@ include 'header_admin.php';?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>utilisateurs</title>
+    <title>Gestion des clients</title>
 </head>
 <body>
     <div class="container">

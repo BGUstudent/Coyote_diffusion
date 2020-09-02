@@ -11,13 +11,13 @@ $database = new Database();
 $connexion = $database->getConnection();
  
 $data = json_decode(file_get_contents("php://input"));
-
+date_default_timezone_set('Europe/Paris');
     $laDate=date('Y-m-d H:i:s');
     $heure=date('H:i:s');
     $stmt = $connexion->prepare("UPDATE points SET last_update=?, heure=?, distribués=?, motif=?, commentaires=? WHERE id=?");
     $stmt->bindParam(1, $laDate);
     $stmt->bindParam(2, $heure);
-
+    $stmt->bindParam(3, $data->distribués);
     $stmt->bindParam(4, $data->motif);
     $stmt->bindParam(5, strip_tags(stripcslashes(htmlentities(htmlspecialchars(trim($data->commentaires)))))); //Sanitize input
     $stmt->bindParam(6, $data->id);

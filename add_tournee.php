@@ -51,7 +51,7 @@ include 'header_admin.php';?>
     }
     ?>
     
-    <br><h4>Supprimer une tournée</h4><br>
+    <br><h4>Modifier/Supprimer une tournée</h4><br>
 
     <?php
     foreach($rounds as $round){
@@ -67,7 +67,8 @@ include 'header_admin.php';?>
         </form></div><br>';
     }
     if(isset($_POST['submitD'.$round->id])){ 
-        $stmtD = $connexion->prepare("DELETE FROM rounds WHERE id={$_POST['id'.$round->id]}");
+        $stmtD = $connexion->prepare("DELETE FROM rounds WHERE id=?");
+        $stmtD->bindParam(1, $_POST['id'.$round->id]);
         $stmtD->execute();
         echo("<script>location.href='add_tournee.php';</script>");
     }

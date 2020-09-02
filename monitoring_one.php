@@ -12,7 +12,7 @@ $stmtU->bindParam(':tournees', $data);
 $stmtU->execute();
 $users = $stmtU->fetchAll(PDO::FETCH_OBJ);
 
-$stmt = $connexion->prepare("SELECT * FROM points WHERE tournees=:tournees AND exemplaires > 0");
+$stmt = $connexion->prepare("SELECT * FROM points WHERE tournees=:tournees AND exemplaires > 0 ORDER BY ordre ASC");
 $stmt->bindParam(':tournees', $data);
 
 if($stmt->execute()) {
@@ -23,11 +23,14 @@ if($stmt->execute()) {
             "id"=>$point->id,
             "nom"=>$point->nom,
             "adresse"=>$point->adresse,
+            "code_postal"=>$point->code_postal,
+            "ville"=>$point->ville,
             "exemplaires"=>$point->exemplaires,
             "last_update"=>$point->last_update,
             "heure"=>$point->heure,
             "motif"=>$point->motif,
             "distribués"=>$point->distribués,
+            "commentaires"=>$point->commentaires,
             "users"=>$users
         );
         array_push($arr_points, $arr_point);

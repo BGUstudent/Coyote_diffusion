@@ -44,7 +44,7 @@ echo 'Tournée n°'.$tournee.'<br>';
 
   $database = new Database();
   $connexion = $database->getConnection();
-  $stmt = $connexion->prepare("INSERT INTO points (ordre, categorie, infos, nom, adresse, code_postal, ville, exemplaires, tournees) VALUES (?, ?, ?, ?, ?, ?, ?, ?, $tournee)");
+  $stmt = $connexion->prepare("INSERT INTO points (categorie, infos, nom, adresse, code_postal, ville, exemplaires, tournees, ordre) VALUES (?, ?, ?, ?, ?, ?, ?, $tournee, ?)");
 
   foreach($CSVrows as $CSVrow)
   {

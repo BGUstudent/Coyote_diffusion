@@ -63,7 +63,7 @@ include 'header_admin.php';?>
         <br>
 
     <!-- formulaire injection CSV --> 
-        Importer un fichier .csv: (ordre, categorie, infos, nom, adresse, code_postal, ville, exemplaires)
+        Importer un fichier .csv: (categorie, infos, nom, adresse, code_postal, ville, exemplaires, ordre)
         <form method="post" action="upload.php" enctype="multipart/form-data">
             <label for="file">Selection le fichier .csv à importer</label>
             <!-- <input type="hidden" name="MAX_FILE_SIZE" value="30000" /> -->
