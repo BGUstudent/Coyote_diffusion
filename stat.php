@@ -145,7 +145,7 @@ if(isset($_POST['submitExport'])){
     $dir = 'export/';
     $filesToDel = array_diff(scandir($dir), array('..', '.')); //Elimine les retours aux dossiers parents.
     foreach($filesToDel as $toDel){
-        unlink($toDel);
+        unlink('export/'.$toDel);
     }    
     $file='export/export '.date('H:i:s').'.csv';
     $out = fopen($file, 'w');
