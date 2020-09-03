@@ -113,14 +113,21 @@ if(isset($_POST['submit'])){
     // echo $sql;
     echo '<br><h5>'.count($result).' points trouvés</h5><br>
     <div id="liste">';
+    $export=[];
     foreach($result as $x){
+        $stmtT = $connexion->prepare("SELECT nom FROM rounds WHERE id=$x->tournees");
+        $stmtT->execute();
+        $round = $stmtT->fetch(PDO::FETCH_OBJ);
+
         echo '<b>'.$x->nom.' </b>
-         : '.$x->adresse.' '.$x->code_postal.', '.$x->ville.'<br>';
+         : '.$x->adresse.' '.$x->code_postal.', '.$x->ville.' (tournée : '.$round->nom.')<br>';
+         array_push($export, [$x->categorie, $x->infos, $x->nom, $x->adresse, $x->code_postal, $x->ville, $x->exemplaires]);
     }
-    echo '</div>';
+    $_SESSION['export']=$export;
+    echo '<form method="POST">
+    <input type="submit" name="submitExport" value="Exporter CSV"></form></div>';
 }
 ?>
-</div>
 <script>
 // Script pour toggle/hide
 function expand() {
@@ -132,5 +139,26 @@ function expand() {
     }
 }
 </script>
+<?php
+if(isset($_POST['submitExport'])){
+//supprimer les anciens exports
+    $dir = 'export/';
+    $filesToDel = array_diff(scandir($dir), array('..', '.')); //Elimine les retours aux dossiers parents.
+    foreach($filesToDel as $toDel){
+        unlink($toDel);
+    }    
+    $file='export/export '.date('H:i:s').'.csv';
+    $out = fopen($file, 'w');
+    fprintf($out, chr(0xEF).chr(0xBB).chr(0xBF));//UTF-8 encoding
+    foreach($_SESSION['export'] as $row){
+        fputcsv($out, $row);
+    }
+    fclose($out);
+    
+    echo("<script>location.href='".$file."';</script>");
+}
+?>
+</div>
+
 </body>
 </html>
