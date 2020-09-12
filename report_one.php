@@ -23,10 +23,8 @@ date_default_timezone_set('Europe/Paris');
     $stmt->bindParam(6, $data->id);
     if($stmt->execute()) {
         http_response_code(200);
-        echo json_encode(array("message" => "Point mis à jour"));
     }
     else{
         http_response_code(503);
-        echo json_encode(array("message" => "pas ok"));
     }
 ?>

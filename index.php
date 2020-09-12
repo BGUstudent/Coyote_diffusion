@@ -1,5 +1,7 @@
 <?php include_once 'Database.php'; 
-	session_start();// on démarre une session
+	ini_set('session.cookie_lifetime', 60 * 60 * 24 * 365);
+	ini_set('session.gc-maxlifetime', 60 * 60 * 24 * 365);
+	session_start(); // on démarre une session
 ?>
 
 <!DOCTYPE html>

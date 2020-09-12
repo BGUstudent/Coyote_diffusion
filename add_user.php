@@ -19,4 +19,3 @@ $stmt->bindParam(6, $_POST['permis']);
 $stmt->execute();
 header("Location:manage_users.php");
 ?>
-</body>

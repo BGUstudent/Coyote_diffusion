@@ -1,5 +1,7 @@
 <?php
-    if (!isset($_SESSION)){
+    if (!isset($_SESSION['user'])){
+        ini_set('session.cookie_lifetime', 60 * 60 * 24 * 365);
+        ini_set('session.gc-maxlifetime', 60 * 60 * 24 * 365);
         session_start();
     };
 	if($_SESSION['user']->accreditation!=2){
@@ -81,6 +83,7 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="nav-link" href="stat.php">Statistiques</a>
                         <a class="nav-link" href="read_reporting.php">Consulter les rapports de distribution</a>
+                        <a class="nav-link" href="report_client.php">Rapports clients</a>
                     </div>
                 </li>
             </ul>

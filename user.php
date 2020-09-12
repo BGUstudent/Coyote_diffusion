@@ -1,6 +1,8 @@
 <?php include_once 'Database.php';
 
-    if (!isset($_SESSION)){
+    if (!isset($_SESSION['user'])){
+        ini_set('session.cookie_lifetime', 60 * 60 * 24 * 365);
+        ini_set('session.gc-maxlifetime', 60 * 60 * 24 * 365);
         session_start();
     };	if($_SESSION['user']->accreditation < 1 && $_SESSION['user']->accreditation > 2){
 		header("Location:index.php");
@@ -15,6 +17,7 @@
         echo '<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://bootswatch.com/4/united/bootstrap.min.css" crossorigin="anonymous">
         <link rel="icon" type="img/logo_square.png" href="img/logo_square_30.png">';
     }
@@ -68,6 +71,22 @@
             <li class="list-group-item">Nombre total d\'exemplaires : '.array_sum(array_column($result, 'exemplaires')).'</li>
         </ul>
     </div>
+
+    <button class="btn btn-link" onclick="expand()">Ajouter un point de livraison</button>
+    <div id="hide" style="display:none">
+        <form method="post" action="add.php">
+            <input type="text" id="nomP" name="nomP" placeholder="Nom du point" style="max-width:220px;" required>
+            <input type="text" id="adresseP" name="adresseP" placeholder="Adresse" style="max-width:220px;" required>
+            <input type="text" id="codePostal" name="codePostal" placeholder="Code postal" style="max-width:220px;" required>
+            <input type="text" id="villeP" name="villeP" placeholder="Ville" style="max-width:220px;" required>
+            <input type="hidden" name="tournee_id" value="'.$user->tournees.'">
+            <input type="text" id="infos" name="infos" placeholder="infos" style="max-width:220px;">
+            <input type="text" id="exemplaires" name="exemplaires" placeholder="nb de exemplaires" style="max-width:220px;" required>
+            <input type="text" id="categorie" name="categorie" placeholder="catégorie" style="max-width:220px;" required>
+            <input type="submit" class="btn btn-primary" name="ajouter" value="Ajouter">
+        </form>
+    </div>
+
     <br>Voici les points à livrer :<br><br>
     <ul class="list-group">'; //Start list
     foreach( $result as $row ) {
@@ -174,12 +193,20 @@
         .then(function(response){
             return response.json();
         })
-        .then(function(data){
-            alert(`${JSON.stringify(data.message, null, 4)}`);
-        })
+
         .catch((error) => console.log(error));
         document.getElementById("li"+y).style.backgroundColor = "#abfaba";//Green background if validated
         $('#exampleModal'+y).modal('hide'); //close modal
+    }
+
+    // Script pour toggle/hide
+    function expand() {
+        var x = document.getElementById("hide");
+        if (x.style.display === "block") {
+            x.style.display = "none";
+        } else {
+            x.style.display = "block";
+        }
     }
     </script>
 </body>
