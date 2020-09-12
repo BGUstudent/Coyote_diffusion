@@ -36,7 +36,9 @@ include 'header_admin.php';?>
 
     <?php
     if(isset($_POST['submit'])){
-        $stmtT = $connexion->prepare("SELECT * FROM rounds WHERE client ='{$_POST['client']}'");
+        $client = $_POST['client'];
+        $stmtT = $connexion->prepare("SELECT * FROM rounds WHERE client = ?");
+        $stmtT->bindParam(1, $client);
         $stmtT->execute();
         $tournees = $stmtT->fetchAll(PDO::FETCH_OBJ);
         $totalExemplaires=0;
