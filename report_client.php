@@ -58,7 +58,7 @@ include 'header_admin.php';?>
             $stmtP->execute();
             $points = $stmtP->fetchAll(PDO::FETCH_OBJ);
 
-            $stmtC = $connexion->prepare("SELECT COUNT(*) FROM points WHERE tournees = $tournee->id");
+            $stmtC = $connexion->prepare("SELECT COUNT(*) FROM points WHERE tournees = $tournee->id AND exemplaires > 0");
             $stmtC->execute();
             $points = $stmtC->fetchColumn();
             $totalPoints+=$points;

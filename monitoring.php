@@ -126,11 +126,13 @@ include 'header_admin.php';?>
             var countEx=0
             var countP=0
             var countD=0
+            var countDone=0
             data.forEach(function(item){
                 countP++
                 countEx+=parseInt(item.exemplaires)
                 countD+=parseInt(item.distribués)
                 if(item.motif=="livré"){ //Si livré
+                    countDone++
                     document.getElementById("monitoring").innerHTML+=`
                         <li class="list-group-item" style='background-color: #abfaba;'>
                         <b>${JSON.stringify(item.nom).replace(/\"/g, "")}</b>,<br> 
@@ -142,10 +144,13 @@ include 'header_admin.php';?>
                          Prévu : ${JSON.stringify(item.exemplaires).replace(/\"/g, "")}
                          Distribués : ${JSON.stringify(item.distribués).replace(/\"/g, "")}</li>`
                 }else if(item.last_update){ //Si livraison impossible
+                    countDone++
                     document.getElementById("monitoring").innerHTML+=`
                         <li class="list-group-item bg-warning">
                         <b>${JSON.stringify(item.nom).replace(/\"/g, "")}</b>,<br> 
-                         ${JSON.stringify(item.adresse).replace(/\"/g, "")}<br>
+                         ${JSON.stringify(item.adresse).replace(/\"/g, "")}, 
+                         ${JSON.stringify(item.code_postal).replace(/\"/g, "")} 
+                         ${JSON.stringify(item.ville).replace(/\"/g, "")} <br>
                          <b>${JSON.stringify(item.motif).replace(/\"/g, "")}</b>, 
                          heure de passage : ${JSON.stringify(item.heure).replace(/\"/g, "")}<br>
                          Prévu : ${JSON.stringify(item.exemplaires).replace(/\"/g, "")}
@@ -155,7 +160,9 @@ include 'header_admin.php';?>
                     document.getElementById("monitoring").innerHTML+=`
                         <li class="list-group-item">
                         <b>${JSON.stringify(item.nom).replace(/\"/g, "")}</b>,<br> 
-                         ${JSON.stringify(item.adresse).replace(/\"/g, "")}<br>
+                         ${JSON.stringify(item.adresse).replace(/\"/g, "")}, 
+                         ${JSON.stringify(item.code_postal).replace(/\"/g, "")} 
+                         ${JSON.stringify(item.ville).replace(/\"/g, "")}<br>
                          Prévu : ${JSON.stringify(item.exemplaires).replace(/\"/g, "")}</li>`
                 }
              })
@@ -165,6 +172,7 @@ include 'header_admin.php';?>
             document.getElementById("user_info").value=JSON.stringify(data[0].users[0].id).replace(/\"/g, "")
             //détails de la tournée
             document.getElementById("details").innerHTML='<h5>Nombre de points à livrer : '
+            + countDone + '/'
             + countP
             +'<br>Nombre d\'exemplaires à livrer : '
             + countEx 
@@ -175,6 +183,7 @@ include 'header_admin.php';?>
             document.getElementById("doneBy").innerHTML='<h4>Effectué par '
             +JSON.stringify(data[0].users[0].prenom).replace(/\"/g, "")
             +' '+JSON.stringify(data[0].users[0].nom).replace(/\"/g, "")+'</h4>';
+
             // Si 2 livreurs
             if(JSON.stringify(data[0].users[1])){
                 document.getElementById("doneBy").innerHTML+=
@@ -183,7 +192,6 @@ include 'header_admin.php';?>
             }
             document.getElementById("users2").value=JSON.stringify(data[0].users[1].id).replace(/\"/g, "")
             document.getElementById("user2_info").value=JSON.stringify(data[0].users[1].id).replace(/\"/g, "")
-
         })
         .catch((error) => console.log(error));
     }
