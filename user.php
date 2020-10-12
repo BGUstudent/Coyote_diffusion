@@ -30,6 +30,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coyote distribution</title>
+    <style>
+        .refresh {
+        position: fixed;
+        z-index:6;
+        opacity: 0.7;
+        bottom: 20px;
+        right: 15%;
+        background-color: #a5c8e4;
+        }
+        @media only screen and (max-width: 1000px) {
+            .refresh {
+                right: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -143,6 +158,7 @@
     echo '</ul">';
     ?>
 </div>
+<a id="refresh" href="javascript:location.reload(true)"  class="btn btn-lg refresh" role="button"><i class="fas fa-redo-alt"></i></a>
 
 <script>
 
@@ -206,6 +222,17 @@
             x.style.display = "block";
         }
     }
+
+    //refresh at same position
+    $(window).scroll(function () {
+            sessionStorage.scrollTop = $(this).scrollTop();
+        });
+        $(document).ready(function () {
+            if (sessionStorage.scrollTop != "undefined") {
+                $(window).scrollTop(sessionStorage.scrollTop);
+            }
+        });
+
     </script>
 </body>
 </html>

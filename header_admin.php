@@ -23,22 +23,10 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
     <link rel="icon" type="img/logo_square.png" href="img/logo_square_30.png">
     <style>
-        .back-to-top {
-        position: fixed;
-        z-index:6;
-        opacity: 0.7;
-        bottom: 20px;
-        right: 15%;
-        display: none;
-        background-color: #a5c8e4;
-        }
         @media only screen and (max-width: 1000px) {
             .encart{
                 max-width: 161px;
                 text-align: center;
-            }
-            .back-to-top {
-                right: 20px;
             }
             .grab{
                 display: none;
@@ -97,20 +85,4 @@
             </ul>
         </div>
     </nav>
-
-<!-- Scroll to top button -->
-<a id="back-to-top" href="#" class="btn btn-lg back-to-top" role="button"><i class="fas fa-chevron-up"></i></a>
-<script>
-    var mybutton = document.getElementById("back-to-top");
-    window.onscroll = function() {scrollFunction()};
-
-    function scrollFunction() {
-    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        mybutton.style.display = "block";
-    } else {
-        mybutton.style.display = "none";
-    }
-    }
-</script>
-
 </body>

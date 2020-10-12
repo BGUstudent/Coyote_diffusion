@@ -19,4 +19,7 @@ $stmt->bindParam(6, strip_tags(stripcslashes(htmlentities(htmlspecialchars(trim(
 $stmt->bindParam(7, strip_tags(stripcslashes(htmlentities(htmlspecialchars(trim($_POST['exemplaires']))))));
 $stmt->bindParam(8, strip_tags(stripcslashes(htmlentities(htmlspecialchars(trim($_POST['categorie']))))));
 $stmt->execute();
+
+$_SESSION['roundID'] = $_POST['tournee_id'];
+
 header('Location: ' . $_SERVER['HTTP_REFERER']);?>

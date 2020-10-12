@@ -10,7 +10,12 @@ include 'header_admin.php';?>
 </head>
 <body>
 <div class="container-fluid">
-
+    <?php
+    if(isset($_SESSION['roundID'])){
+        $_POST['tournee_info'] = $_SESSION['roundID'];
+        unset($_SESSION['roundID']);
+    }
+    ?>
     <!-- Selection de la tournée -->
     <h4>Selectionner une tournée</h4>
 

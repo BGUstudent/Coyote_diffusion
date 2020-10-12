@@ -66,7 +66,7 @@ include 'header_admin.php';?>
             <input class="btn btn-danger btn-sm ml-3" type="submit" name="submitD'.$round->id.'" value="Supprimer">
         </form></div><br>';
     }
-    if(isset($_POST['submitD'.$round->id])){ 
+    if(isset($_POST['submitD'.$round->id])){
         $stmtD = $connexion->prepare("DELETE FROM rounds WHERE id=?");
         $stmtD->bindParam(1, $_POST['id'.$round->id]);
         $stmtD->execute();
